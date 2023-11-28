@@ -1,0 +1,29 @@
+[
+    {
+      "id": 1,
+      "title": "Milanesa",
+      "description": "de carne",
+      "price": 2000,
+      "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Weekend_in_Buenos_Aires.jpg",
+      "code": "1",
+      "stock": 15
+    },
+    {
+      "id": 2,
+      "title": "Milanesa",
+      "description": "de pollo, viene con fritas y ensalada",
+      "price": 1800,
+      "thumbnail": "https://wildfork.mx/cdn/shop/articles/03_Milanesa_de_Pollo_con_Papas_Fritas.jpg?v=1614571982",
+      "code": "2",
+      "stock": 14
+    },
+    {
+      "id": 3,
+      "title": "Tarta",
+      "description": "de jamón y queso",
+      "price": 1200,
+      "thumbnail": "https://lacteosbarraza.com.ar/home/wp-content/uploads/2020/09/tarta-jamon-queso.jpg",
+      "code": "3",
+      "stock": 9
+    }
+  ]
