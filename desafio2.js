@@ -8,7 +8,7 @@ class ProductManager {
         this.#filePath = filePath;
     }
 
-    async addProduct(productName, price, numIdentif,stock) {
+    async addProduct(productName, price, numIdentif,stock = []) {
         try {
             if (!productName || !price) {
                 throw new Error("Missing data.");
