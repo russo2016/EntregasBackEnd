@@ -6,10 +6,9 @@ class ProductManager {
 
     constructor(filePath = "./productos.json") {
         this.#filePath = filePath;
-        this.#setLastId();
     }
 
-    async addProduct(productName, price, numIdentif,stock = []) {
+    async addProduct(productName, price, numIdentif,stock) {
         try {
             if (!productName || !price) {
                 throw new Error("Missing data.");
@@ -117,6 +116,13 @@ class ProductManager {
 }
 
 const productManager = new ProductManager("./productos.json");
+(async () => {
+    await productManager.addProduct("Milanesa", 2000, "19", 15);
+    await productManager.addProduct("Tarta", 1200, "21", 9);
+    await productManager.addProduct("Pizza", 1000, "22", 6);
+
+    console.log(await productManager.getProduct());
+})();
 
 (async () => {
     console.log(await productManager.getProduct());
