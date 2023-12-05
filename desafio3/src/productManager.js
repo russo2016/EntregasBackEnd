@@ -37,6 +37,14 @@ class ProductManager {
         }
     }
 
+    async getProducts() {
+        try {
+            return await this.getProduct();
+        } catch (error) {
+            console.log(error);
+            return [];
+        }
+    }
     async getProduct() {
         try {
             if (fs.existsSync(this.#filePath)) {

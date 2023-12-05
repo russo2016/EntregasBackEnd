@@ -9,9 +9,11 @@ const productManager = new ProductManager("src/productos.json");
 app.use(express.json());
 
 app.get('/products', async (req, res) => {
+    const { limit } = req.query;
     try {
-        const products = await productManager.getProduct();
-        res.json(products);
+        const products = await productManager.getProducts();
+        const limitedProducts = limit ? products.slice(0, parseInt(limit)) : products;
+        res.json(limitedProducts);
     } catch (error) {
         res.status(500).send({ message: 'Error al obtener los productos' });
     }
