@@ -3,22 +3,22 @@ const socket = io();
 const addProductBtn = document.getElementById("addProductBtn");
 const deleteProductBtn = document.getElementById("deleteProductBtn");
 
-addProductBtn.addEventListener("click", () => {
-    const title = document.getElementById("title").value;
-    const description = document.getElementById("description").value;
-    const price = document.getElementById("price").value;
-    const thumbnail = document.getElementById("thumbnail").value;
-    const code = document.getElementById("code").value;
-    const stock = document.getElementById("stock").value;
-    console.log(title, description, price, thumbnail, code, stock)
+addProductBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const title = document.getElementById("title");
+    const description = document.getElementById("description");
+    const price = document.getElementById("price");
+    const thumbnail = document.getElementById("thumbnail");
+    const code = document.getElementById("code");
+    const stock = document.getElementById("stock");
 
     const product = {
-        title,
-        description,
-        price,
-        thumbnail,
-        code,
-        stock,
+        title : title.value,
+        description : description.value,
+        price : price.value,
+        thumbnail : thumbnail.value,
+        code : code.value,
+        stock : stock.value,
     };
     socket.emit("addProduct", product);
     title.value = "";
@@ -29,10 +29,11 @@ addProductBtn.addEventListener("click", () => {
     stock.value = "";
 });
 
-deleteProductBtn.addEventListener("click", () => {
-    const id = document.getElementById("productId").value;
-    socket.emit("deleteProduct", id);
-    id.value = "";
+deleteProductBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    const productId = document.getElementById("productId");
+    socket.emit("deleteProduct", productId.value);
+    productId.value = "";
     alert("producto eliminado");
   });
 
@@ -49,4 +50,8 @@ socket.on("updateProducts", (products) => {
         <td>${product.stock}</td>
         </tr>`;
     });
+});
+
+socket.on("error", (error) => {
+    console.log("El producto no existe")
 });

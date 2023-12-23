@@ -24,6 +24,7 @@ export class ProductManager {
       this.products = data?.length > 0 ? data : [];
     } catch (error) {
       console.log(error);
+      return false;
     }
 
     let codeExists = this.products.some((dato) => dato.code == code);
@@ -46,7 +47,10 @@ export class ProductManager {
         await utils.writeFile(this.path, this.products);
       } catch (error) {
         console.log(error);
+        return false;
       }
+
+      return true;
     }
   }
   async getProducts() {
@@ -109,7 +113,7 @@ export class ProductManager {
         await utils.writeFile(this.path, products);
         return { mensaje: "producto eliminado", producto: product };
       } else {
-        return { mensaje: "no existe el producto solicitado" };
+        return false;
       }
     } catch (error) {
       console.log(error);

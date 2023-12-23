@@ -1,5 +1,5 @@
 import express from 'express';
-import { Server, Socket } from "socket.io";
+import { Server } from "socket.io";
 import productRouter from "./routes/products.router.js";
 import cartRouter from "./routes/cart.router.js";
 import handlebars from "express-handlebars";
@@ -53,7 +53,6 @@ socketServer.on("connection", (socket) => {
         stock
       );
       const allProducts = await productManager.getProducts();
-      console.log(allProducts);
       result && socketServer.emit("updateProducts", allProducts);
     } catch (err) {
       console.log(err);
@@ -64,6 +63,10 @@ socketServer.on("connection", (socket) => {
     try{
       const result = await productManager.deleteProductById(id);
       result && socketServer.emit("updateProducts", await productManager.getProducts());
+      if(!result){
+        socket.emit("error",result);
+      }
+
     } catch(err){
       console.log(err);
     }
