@@ -38,17 +38,25 @@ deleteProductBtn.addEventListener("click", (e) => {
   });
 
 socket.on("updateProducts", (products) => {
-    const productsContainer = document.getElementById("productsContainer");
+    const productsContainer = document.getElementById("products");
     productsContainer.innerHTML = "";
     products.forEach((product) => {
-        productsContainer.innerHTML += `<tr>
-        <td>${product.title}</td>
-        <td>${product.description}</td>
-        <td>${product.price}</td>
-        <td>${product.thumbnail}</td>
-        <td>${product.code}</td>
-        <td>${product.stock}</td>
-        </tr>`;
+        productsContainer.innerHTML += `
+    <div class="products" id="products">
+        <div class="cardProduct">
+            <div class="imageProduct">
+                <img src="${product.thumbnail}" alt="${product.title}">
+            </div>
+            <div class="infoProduct">
+                <h3>${product.title}</h3>
+                <p>${product.description}</p>
+                <p>${product.price}</p>
+                <p>${product.code}</p>
+                <p>${product.stock}</p>
+                <span>${product.id}</span>
+            </div>
+        </div>
+    </div>`;
     });
 });
 
