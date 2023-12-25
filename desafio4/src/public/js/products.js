@@ -42,7 +42,6 @@ socket.on("updateProducts", (products) => {
     productsContainer.innerHTML = "";
     products.forEach((product) => {
         productsContainer.innerHTML += `
-    <div class="products" id="products">
         <div class="cardProduct">
             <div class="imageProduct">
                 <img src="${product.thumbnail}" alt="${product.title}">
@@ -55,8 +54,7 @@ socket.on("updateProducts", (products) => {
                 <p>${product.stock}</p>
                 <span>${product.id}</span>
             </div>
-        </div>
-    </div>`;
+        </div>`;
     });
 });
 
