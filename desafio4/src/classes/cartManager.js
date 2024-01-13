@@ -1,8 +1,5 @@
 import crypto from "crypto";
 import utils from "../utils.js";
-import { ProductManager } from "./productManager.js";
-
-const productManager = new ProductManager("productos.json");
 class CartManager {
   static carts;
   constructor(path) {
@@ -62,26 +59,17 @@ class CartManager {
   addProductToCart = async (cid, pid) => {
     try {
       const cart = await this.getCartById(cid);
-      const product = await productManager.getProductById(pid);
-      const id = product.id;
       console.log(cart);
       const { products } = cart;
-      const findProductIndex = function (productId, searchId) {
-        console.log(productId, searchId)
-        return productId === searchId;
-      };
-  
-      const productIndex = products.findIndex(() => findProductIndex(id, pid));
+      const productIndex = products.findIndex(
+        (product) => product.product === pid
+      );
+
       if (productIndex !== -1) {
         products[productIndex].quantity++;
       } else {
         products.push({
-          title: product.title,
-          description : product.description,
-          price : product.price,
-          thumbnail : product.thumbnail,
-          code : product.code,
-          stock : product.stock,
+          product: pid,
           quantity: 1,
         });
       }
