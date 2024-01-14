@@ -1,0 +1,115 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+}
+.products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+}
+
+.cardProduct {
+    border: 1px solid #3498db;
+    padding: 1rem;
+    text-align: center;
+    background-color: #ecf0f1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.cardProduct:hover {
+    transform: scale(1.05);
+}
+
+.imageProduct img {
+    max-width: 100%;
+    height: auto;
+    max-height: 150px
+}
+
+.infoProduct {
+    margin-top: 1rem;
+}
+
+.infoProduct h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.infoProduct p {
+    margin: 0.5rem 0;
+    color: #34495e;
+}
+
+.add-delete {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+form {
+    background-color: #ecf0f1;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 45%;
+}
+
+form h3 {
+    background-color: #3498db;
+    color: #fff;
+    font-size: 1.5em;
+    margin: 0;
+    padding: 10px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 8px;
+    color: #333;
+}
+
+input,
+textarea {
+    width: calc(100% - 30px);
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin: 15px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+.add{
+    display: flex;
+    flex-direction: column;
+}
+.delete{
+    display: flex;
+    flex-direction: column;
+}
+.add div{
+    margin: 5px;
+}
+.delete div{
+    margin: 5px;
+}

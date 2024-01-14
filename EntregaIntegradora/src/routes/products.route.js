@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
         const response = await product.getAll();
         res.status(200).json(response);
     }catch(error){
-        res.status(500).log(error);
+        res.status(500).json(error);
     }
 });
 
@@ -20,7 +20,7 @@ router.get("/:id", async (req, res) => {
         const response = await product.getById(id);
         res.status(200).json(response);
     }catch(error){
-        res.status(500).log(error);
+        res.status(500).json(error);
     }
 });
 
@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
         const response = await product.saveProducts({ title, description, price, thumbnail, code, stock });
         res.status(200).json(response);
     }catch(error){
-        res.status(500).log(error);
+        res.status(500).json(error);
     }
 });
 
@@ -41,7 +41,7 @@ router.put("/:id", async (req, res) => {
         const response = await product.updateProduct(id, { title, description, price, thumbnail, code, stock });
         res.status(200).json(response);
     }catch(error){
-        res.status(500).log(error);
+        res.status(500).json(error);
     }
 });
 
@@ -51,7 +51,7 @@ router.delete("/:id", async (req, res) => {
         const response = await product.deleteProduct(id);
         res.status(200).json(response);
     }catch(error){
-        res.status(500).log(error);
+        res.status(500).json(error);
     }
 });
 

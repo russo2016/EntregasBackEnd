@@ -15,6 +15,31 @@ export default class Cart {
         return cart;
     }
 
+    addProductToCart = async (cid, pid) => {
+        try {
+            const cart = await this.getById(cid);
+            const { product } = cart; // Nota el cambio aquí
+    
+            const productIndex = product.findIndex(
+                (item) => item.product.toString() === pid // Asegurarse de que pid sea del mismo tipo que el _id en MongoDB
+            );
+    
+            if (productIndex !== -1) {
+                product[productIndex].quantity++;
+            } else {
+                product.push({
+                    product: pid,
+                    quantity: 1,
+                });
+            }
+    
+            await this.updateCart(cid,cart);
+            return cart;
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    
     async saveCart(cart) {
         const newCart = new CartsModel(cart);
         let result = await newCart.save();

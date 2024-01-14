@@ -36,6 +36,17 @@ router.post("/", async (req, res) => {
     }
 });
 
+router.post("/:cid/products/:pid", async (req, res) => {
+    const { cid, pid } = req.params;
+    try {
+      const response = await cart.addProductToCart(cid, pid);
+      res.status(200).json({ message: "success", data: response });
+    } catch (err) {
+      console.log(err);
+      res.status(500).json({ message: "error", data: err });
+    }
+  });
+
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     const { timestamp, products } = req.body;
