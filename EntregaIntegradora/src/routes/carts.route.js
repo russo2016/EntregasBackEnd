@@ -62,7 +62,7 @@ router.put("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
     const { id } = req.params;
     try{
-        const response = await cart.deleteCart(id);
+        const response = await cart.deleteProductsFromCart(id);
         res.status(200).json(response);
     }
     catch(error){

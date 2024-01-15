@@ -51,8 +51,31 @@ export default class Cart {
         return result;
     }
 
-    async deleteCart(id) {
+    /*async deleteCart(id) {
         const result = await CartsModel.deleteOne({ _id: id });
         return result;
+    }*/
+
+    async deleteProductsFromCart(id) {
+        try {
+            // Encuentra el carrito por su ID
+            const cart = await CartsModel.findById(id);
+
+            // Verifica si el carrito existe
+            if (!cart) {
+                return { error: 'Carrito no encontrado' };
+            }
+
+            // Elimina los elementos dentro del campo 'product'
+            cart.product = [];
+
+            // Guarda el carrito actualizado en la base de datos
+            const result = await cart.save();
+
+            return result;
+        } catch (error) {
+            console.error('Error al eliminar elementos del carrito:', error);
+            return { error: 'Error interno del servidor' };
+        }
     }
 }

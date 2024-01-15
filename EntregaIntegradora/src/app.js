@@ -2,6 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import handlebars from 'express-handlebars';
+import { Server } from 'socket.io';
 import viewsRouter from "./routes/views.route.js";
 import productsRouter from "./routes/products.route.js";
 import messagesRouter from "./routes/messages.route.js";
@@ -30,6 +31,12 @@ app.use("/api/carts",cartsRouter);
 
 const server = app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+const io = new Server(server);
+
+io.on("connection", (socket) => {
+	console.log("Se conecto un nuevo ususario");
 });
 
 mongoose

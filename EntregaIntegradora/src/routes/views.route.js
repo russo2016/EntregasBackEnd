@@ -13,21 +13,29 @@ router.get("/", (req, res) => {
 router.get("/products", async (req, res) => {
     const products = new Product();
     const result = await products.getAll();
-    res.status(200).render("products", {
-        title: "Listado de productos",
-        products: result,
-        style: "css/products.css"
-    });
+    try{
+        res.status(200).status(200).render("products", {
+            title: "Listado de productos",
+            products: result,
+            style: "css/products.css"
+        });
+    }catch(error){
+        res.status(500).json(error);
+    }
 });
 
 router.get("/messages", async (req, res) => {
     const messages = new Message();
     const result = await messages.getAll();
-    res.render("messages", {
-        title: "Listado de mensajes",
-        messages: result,
-        style: "css/messages.css"
+    try{
+        res.status(200).render("messages", {
+            title: "Listado de mensajes",
+            messages: result,
+            style: "css/messages.css"
     });
+    }catch(error){
+        res.status(500).json(error);
+    }
 });
 
 router.get("/carts/:id", async (req, res) => {
@@ -47,12 +55,17 @@ router.get("/carts/:id", async (req, res) => {
             quantity: cartProduct.quantity
         };
     }));
+    
+    try{
+        res.status(200).render("carts", {
+            title: "Carrito",
+            products: productsInfo,
+            style: "../css/carts.css"
+        });
+    }catch(error){
+        res.status(500).json(error);
+    }
 
-    res.render("carts", {
-        title: "Carrito",
-        products: productsInfo,
-        style: "../css/carts.css"
-    });
 });
 
 export default router;
