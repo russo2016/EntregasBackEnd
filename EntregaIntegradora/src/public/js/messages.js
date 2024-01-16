@@ -8,7 +8,6 @@ addMessageForm.addEventListener("submit", async (e) => {
 
     const name = prompt("Ingrese su nombre");
 
-    if (name && messageInput.value) {
         try {
             if (name && messageInput.value) {
                 fetch("/api/messages", {
@@ -30,13 +29,12 @@ addMessageForm.addEventListener("submit", async (e) => {
                     });
 
                 document.getElementById("addMessageForm").reset();
-            } else {
-                alert("Ingrese un nombre y un mensaje antes de enviar.");
-            }
+    } else {
+        alert("Ingrese un nombre y un mensaje antes de enviar.");
+    }
 } catch (error) {
     console.log(error);
     }
-}
 });
 
 async function reload() {
