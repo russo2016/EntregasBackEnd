@@ -18,10 +18,10 @@ export default class Cart {
     addProductToCart = async (cid, pid) => {
         try {
             const cart = await this.getById(cid);
-            const { product } = cart; // Nota el cambio aquí
+            const { product } = cart;
     
             const productIndex = product.findIndex(
-                (item) => item.product.toString() === pid // Asegurarse de que pid sea del mismo tipo que el _id en MongoDB
+                (item) => item.product.toString() === pid
             );
     
             if (productIndex !== -1) {
@@ -58,18 +58,11 @@ export default class Cart {
 
     async deleteProductsFromCart(id) {
         try {
-            // Encuentra el carrito por su ID
             const cart = await CartsModel.findById(id);
-
-            // Verifica si el carrito existe
             if (!cart) {
                 return { error: 'Carrito no encontrado' };
             }
-
-            // Elimina los elementos dentro del campo 'product'
             cart.product = [];
-
-            // Guarda el carrito actualizado en la base de datos
             const result = await cart.save();
 
             return result;
