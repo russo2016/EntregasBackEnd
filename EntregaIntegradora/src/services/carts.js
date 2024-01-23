@@ -40,6 +40,18 @@ export default class Cart {
         }
     };
     
+    async updateProductFromCart(cid, pid, quantity) {
+        try{
+            const cart = await CartsModel.updateOne(
+                { _id: cid, "product.product": pid },
+                { $set: { "product.$.quantity": quantity } }
+            );
+            return cart;
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     async saveCart(cart) {
         const newCart = new CartsModel(cart);
         let result = await newCart.save();

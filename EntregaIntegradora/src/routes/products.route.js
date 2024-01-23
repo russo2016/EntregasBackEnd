@@ -1,5 +1,6 @@
 import { Router } from "express";
 import Product from "../services/products.js";
+import { ProductsModel } from "../models/products.js";
 
 const router = Router();
 
@@ -7,10 +8,17 @@ const product = new Product();
 
 router.get("/", async (req, res) => {
     try{
-        const response = await product.getAll();
+        const {limit, page, query, sort} = req.query;
+        const response = await ProductsModel.paginate(
+            {},{
+                limit: limit || 1,
+                page: page || 1,
+            }
+        );
         res.status(200).json(response);
     }catch(error){
         res.status(500).json(error);
+        console.log(error.message)
     }
 });
 

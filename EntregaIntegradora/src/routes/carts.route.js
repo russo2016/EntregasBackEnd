@@ -47,14 +47,15 @@ router.post("/:cid/products/:pid", async (req, res) => {
     }
   });
 
-router.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    const { timestamp, products } = req.body;
-    try{
-        const response = await cart.updateCart(id, { timestamp, products });
+router.put("/:cid/product/:pid", async (req, res) => {
+    const { cid, pid } = req.params;
+    const { quantity } = req.body;
+
+    try {
+        const response = await cart.addProductToCart(cid, pid, quantity);
+
         res.status(200).json(response);
-    }
-    catch(error){
+    } catch (error) {
         res.status(500).json(error);
     }
 });
