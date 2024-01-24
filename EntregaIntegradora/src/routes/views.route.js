@@ -11,15 +11,47 @@ router.get("/", (req, res) => {
 });
 
 router.get("/products", async (req, res) => {
-    const products = new Product();
-    const result = await products.getAll();
+    const product = new Product();
     try{
-        res.status(200).status(200).render("products", {
+        const {limit, page, query, sort} = req.query;
+        const parsedQuery = () =>{
+            if (query){
+                return JSON.parse(query);
+            }
+            return {}
+        }
+        const isSorted = () => {
+            if (sort){
+            if (sort === "asc"){
+                return 1
+            }else if (sort === "desc"){
+                return -1
+            }
+        }else{
+                return null
+            }
+        }
+        const productsData = await ProductsModel.paginate(
+        parsedQuery(),{
+                limit: limit || 1,
+                page: page || 1,
+                sort: sort ? { price: isSorted() } : null,
+                lean: true
+            }
+        );
+        const { docs, hasNextPage, hasPrevPage, nextPage, prevPage, totalPages } = productsData;
+        const products = docs;
+        res.status(200).render("products", {
             title: "Listado de productos",
-            products: result,
+            products,
+            hasNextPage,
+            hasPrevPage,
+            nextPage,
+            prevPage,
+            totalPages,
             style: "css/products.css"
         });
-    }catch(error){
+        }catch(error){
         res.status(500).json(error);
     }
 });

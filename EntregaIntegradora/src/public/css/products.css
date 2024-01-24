@@ -47,3 +47,83 @@ body {
     margin: 0.5rem 0;
     color: #34495e;
 }
+
+#addProductToCart {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+#addProductToCart:hover {
+    background-color: #2980b9;
+}
+
+.products-container {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.pagination-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    align-items: center;
+}
+
+.pagination-buttons a {
+    background-color: #3498db;
+    color: #fff;
+    padding: 8px 12px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.pagination-buttons a:hover {
+    background-color: #2980b9;
+}
+
+.pagination-buttons button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+.pagination-buttons button:hover {
+    background-color: #2980b9;
+}
+
+.left,
+.right {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+.left:hover,
+.right:hover {
+    background-color: #2980b9;
+}
+
+.right {
+    margin-left: auto;
+}
