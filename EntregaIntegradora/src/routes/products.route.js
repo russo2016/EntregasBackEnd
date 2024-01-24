@@ -9,16 +9,33 @@ const product = new Product();
 router.get("/", async (req, res) => {
     try{
         const {limit, page, query, sort} = req.query;
+        const parsedQuery = () =>{
+            if (query){
+                return JSON.parse(query);
+            }
+            return {}
+        }
+        const isSorted = () => {
+            if (sort){
+            if (sort === "asc"){
+                return 1
+            }else if (sort === "desc"){
+                return -1
+            }
+        }else{
+                return null
+            }
+        }
         const response = await ProductsModel.paginate(
-            {},{
-                limit: limit || 1,
+        parsedQuery(),{
+                limit: limit || 10,
                 page: page || 1,
+                sort: sort ? { price: isSorted() } : null
             }
         );
         res.status(200).json(response);
     }catch(error){
         res.status(500).json(error);
-        console.log(error.message)
     }
 });
 
