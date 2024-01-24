@@ -3,6 +3,7 @@ import Product from "../services/products.js";
 import Message from "../services/messages.js";
 import Cart from "../services/carts.js";
 import { ProductsModel } from "../models/products.js";
+import { CartsModel } from "../models/carts.js";
 
 const router = Router();
 
@@ -73,25 +74,11 @@ router.get("/messages", async (req, res) => {
 router.get("/carts/:id", async (req, res) => {
     const { id } = req.params;
     const cart = new Cart();
-    const result = await cart.getById(id);
-
-    const productsInfo = await Promise.all(result.product.map(async (cartProduct) => {
-        const productInfo = await ProductsModel.findById(cartProduct.product);
-        return {
-            title: productInfo.title,
-            description: productInfo.description,
-            price: productInfo.price,
-            thumbnail: productInfo.thumbnail,
-            code: productInfo.code,
-            stock: productInfo.stock,
-            quantity: cartProduct.quantity
-        };
-    }));
-    
+    const result = await CartsModel.findById(id).populate("product.product").lean();
     try{
         res.status(200).render("carts", {
             title: "Carrito",
-            products: productsInfo,
+            products: result.product,
             style: "../css/carts.css"
         });
     }catch(error){
