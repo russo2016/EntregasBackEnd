@@ -1,0 +1,21 @@
+<h1 class="title">Chat</h1>
+<div>
+    <div id="messages" class="messages">
+    {{#each messages}}
+    <div class="cardMessage">
+        <div class="infoMessage">
+            <h3>{{this.name}}</h3>
+            <p>{{this.message}}</p>
+        </div>
+    </div>
+    {{/each}}
+    </div>
+    <form id="addMessageForm">
+        <label>Mensaje:</label>
+        <input type="text" id="message" name="message" placeholder="Escribe tu mensaje aquí">
+
+        <button id="addMessage" type="submit">Enviar Mensaje</button>
+    </form>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/js/messages.js"></script>   
