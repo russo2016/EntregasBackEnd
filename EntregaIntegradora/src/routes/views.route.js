@@ -4,12 +4,8 @@ import Message from "../services/messages.js";
 import Cart from "../services/carts.js";
 import { ProductsModel } from "../models/products.js";
 import { CartsModel } from "../models/carts.js";
-<<<<<<< HEAD
 import UserModel  from "../models/user.model.js";
 import auth from "../middlewares/auth.js";
-=======
-
->>>>>>> 94cb749589c74194909559857a5a4c970356012b
 const router = Router();
 
 router.get("/", (req, res) => {
