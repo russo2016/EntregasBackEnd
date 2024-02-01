@@ -151,6 +151,17 @@ router.post("/login", async (req, res) => {
     }
 });
 
+router.post("/logout", (req, res) => {
+    req.session.destroy((err) => {
+      if (err) {
+        console.log(err);
+        res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
+      } else {
+        res.json({ success: true, message: 'Sesión cerrada correctamente' });
+      }
+    });
+  });
+
 router.get("/admin", auth, (req, res) => {
     res.render("admin")
 });
