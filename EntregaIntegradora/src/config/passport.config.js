@@ -61,11 +61,11 @@ const initializePassport = () => {
         try {
           const user = await userService.findOne({ email: username });
           if (!user) {
-            return done(null, false, { message: "User not found" });
+            return done(null, false, { message: "Usuario no encontrado" });
           }
 
-          if (!isValidPassword(user.password, password)) {
-            return done(null, false, { message: "Wrong password" });
+          if (!isValidPassword(user, password)) {
+            return done(null, false, { message: "Contraseña incorrecta" });
           } else {
             return done(null, user);
           }
