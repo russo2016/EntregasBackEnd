@@ -1,27 +1,46 @@
-<div class="navbar">
-  <a href="/login" id="logout">Logout</a>
-</div>
-<div class="products-container">
-<h1 class="title">Productos</h1>
-    <div class="products">
-        {{#each products}}
-        <div class="cardProduct">
-            <div class="imageProduct">
-                <img src="{{this.thumbnail}}" alt="{{this.title}}">
+
+    <div class="wrapper">
+        <aside>
+            <header>
+                <a href="/products" >
+                    <img class="foto" src="https://d22fxaf9t8d39k.cloudfront.net/12c685de5cbd73427138329b8e577c1313a634cb2e69a07e8e692e19827d4721123526.jpeg">
+                </a>
+                <a href="/login" id="logout">Logout</a>
+            </header>
+            <nav>
+                <ul class="menu">
+                    <li>
+                        <button id="todos" class="boton-menu boton-categoria active"><i class="bi bi-hand-index-thumb-fill"></i> Todos los productos</button>
+                    </li>
+                    <li>
+                        <a class="boton-menu boton-carrito" href="#">
+                            <i class="bi bi-cart-fill"></i> Carrito <span id="numerito" class="numerito">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <footer>
+                <p class="texto-footer">© 2022 BMYM Vapor</p>
+            </footer>
+        </aside>
+        <main>
+            <h2 class="titulo-principal" id="titulo-principal">Todos los productos</h2>
+            <div id="contenedor-productos" class="contenedor-productos">
+                {{#each products}}
+                    <div class="producto">
+                        <div>
+                            <img class="producto-imagen" src="{{this.thumbnail}}" alt="{{this.title}}">
+                        </div>
+                        <div class="producto-detalles">
+                            <h3 class="producto-titulo">{{this.title}}</h3>
+                            <p>{{this.description}}</p>
+                            <p class="producto-precio">${{this.price}}</p>
+                            <button id="addProductToCart" class="producto-agregar">Agregar al carrito</button>
+                        </div>                     
+                    </div>
+                {{/each}}
             </div>
-            <div class="infoProduct">
-                <h3>{{this.title}}</h3>
-                <p>{{this.description}}</p>
-                <p>${{this.price}}</p>
-                <p>{{this.code}}</p>
-                <p>{{this.stock}}</p>
-            </div>
-            <button id="addProductToCart">Agregar al carrito</button>
-        </div>
-        {{/each}}
-    </div>
-</div>
-        <div class="pagination-buttons">
+                    <div class="pagination-buttons">
             {{#if hasPrevPage}}
                 <a class="left" href="/products?page={{prevPage}}"><button>Anterior</button></a>
             {{/if}}
@@ -29,4 +48,8 @@
                 <a class="right" href="/products?page={{nextPage}}"><button>Siguiente</button></a>
             {{/if}}
         </div>
-<script src="/js/products.js"></script>
+        </main>
+        
+    </div>
+    <script src="/js/products.js"></script>
+    

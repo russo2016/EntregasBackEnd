@@ -1,54 +1,191 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f2f2f2;
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
 }
 
-.title {
-    text-align: center;
-    margin: 20px;
+h1, h2, h3, h4, h5, h6, p, a, input, textarea, ul {
+    margin: 0;
+    padding: 0;
 }
 
-.carts {
+ul {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    background-color: #F4CBE3;
+}
+
+.foto{
+    width: 100px;
+    background-color: transparent;
+}
+
+aside {
+    padding: 2rem;
+    padding-right: 0;
+    color: white;
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 20px;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.cardCart {
-    border: 1px solid #3498db;
+.boton-menu {
+    background-color: transparent;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
     padding: 1rem;
-    text-align: center;
-    background-color: #ecf0f1;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-    margin: 10px;
-    border-radius: 8px;
-    width: 300px;
+    font-size: .85rem;
+    width: 100%;
 }
 
-.cardCart:hover {
-    transform: scale(1.05);
+.boton-menu.active {
+    background-color: white;
+    color: #F4CBE3;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    position: relative;
 }
 
-.imageCart img {
-    max-width: 100%;
-    height: auto;
-    max-height: 150px;
-    border-radius: 8px;
+.boton-menu.active::before {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 2rem;
+    bottom: 100%;
+    right: 0;
+    background-color: transparent;
+    border-bottom-right-radius: .5rem;
+    box-shadow: 0 1rem 0 white;
 }
 
-.infoCart {
-    margin-top: 1rem;
+.boton-menu.active::after {
+    content: '';
+    position: absolute;
+    width: 1rem;
+    height: 2rem;
+    top: 100%;
+    right: 0;
+    background-color: transparent;
+    border-top-right-radius: .5rem;
+    box-shadow: 0 -1rem 0 white;
 }
 
-.infoCart h3 {
-    font-size: 1.2rem;
-    margin-bottom: 0.5rem;
-    color: #2c3e50;
+.boton-carrito {
+    margin-top: 2rem;
 }
 
-.infoCart p {
-    margin: 0.5rem 0;
-    color: #34495e;
+.texto-footer {
+    color: white;
+    font-size: .85rem;
+}
+
+main {
+    background-color: white;
+    margin: 1rem;
+    margin-left: 0;
+    border-radius: 2rem;
+    padding: 3rem;
+}
+
+.titulo-principal {
+    color: #F4CBE3;
+    margin-bottom: 2rem;
+}
+
+
+.producto-titulo {
+    font-size: 1rem;
+}
+
+.contenedor-carrito {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.carrito-productos {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.carrito-producto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(240, 240, 240);
+    color: #F4CBE3;
+    padding: .5rem;
+    padding-right: 1.5rem;
+    border-radius: 1rem;
+}
+
+.carrito-producto-imagen {
+    width: 4rem;
+    border-radius: 1rem;
+}
+
+.carrito-acciones {
+    display: flex;
+    justify-content: space-between;
+}
+
+.carrito-acciones-vaciar {
+    border: 0;
+    background-color: rgb(240, 240, 240);
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #F4CBE3;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.carrito-acciones-derecha {
+    display: flex;
+}
+
+.carrito-acciones-total {
+    display: flex;
+    background-color: rgb(240, 240, 240);
+    padding: 1rem;
+    color: #F4CBE3;
+    text-transform: uppercase;
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    gap: 1rem;
+}
+
+.carrito-acciones-comprar {
+    border: 0;
+    background-color: #F4CBE3;
+    padding: 1rem;
+    color: white;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.close-menu {
+    display: none;
 }

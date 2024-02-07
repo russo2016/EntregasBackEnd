@@ -1,18 +1,57 @@
-<div>
-    <h1 class="title">Carrito de compras</h1>
-    <div class="carts">
-        {{#each products}}
-        <div class="cardCart">
-            <div class="imageCart">
-                <img src="{{product.thumbnail}}" alt="{{product.title}}">
+    <div class="wrapper">
+        <aside>
+            <button class="close-menu" id="close-menu">
+                <i class="bi bi-x"></i>
+            </button>
+            <header>
+                <a href="/products" >
+                    <img class="foto" src="https://d22fxaf9t8d39k.cloudfront.net/12c685de5cbd73427138329b8e577c1313a634cb2e69a07e8e692e19827d4721123526.jpeg">
+                </a>
+            </header>
+            <nav>
+                <ul>
+                    <li>
+                        <a class="boton-menu boton-volver" href="/products">
+                            <i class="bi bi-arrow-return-left"></i> Seguir comprando
+                        </a>
+                    </li>
+                    <li>
+                        <a class="boton-menu boton-carrito active" href="#">
+                            <i class="bi bi-cart-fill"></i> Carrito
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <footer>
+                <p class="texto-footer">© 2022 BMYM Vapor</p>
+            </footer>
+        </aside>
+        <main>
+            <h2 class="titulo-principal">Carrito</h2>
+            <div class="contenedor-carrito">
+                <div id="carrito-productos" class="carrito-productos">
+                {{#each products}}
+                        <div class="carrito-producto">
+                            <img class="carrito-producto-imagen" src="{{product.thumbnail}}" alt="{{product.title}}">
+                            <h3 class="titulo-producto-carrito">{{product.title}}</h3>
+                            <p class="carrito-producto-precio">${{product.price}}</p>
+                            <p class="carrito-producto-cantidad">Cantidad en el carrito: {{this.quantity}}</p>
+                        </div>
+                {{/each}}
+                </div>
+
+                <div id="carrito-acciones" class="carrito-acciones">
+                    <div class="carrito-acciones-izquierda">
+                        <button id="carrito-acciones-vaciar" class="carrito-acciones-vaciar">Vaciar carrito</button>
+                    </div>
+                    <div class="carrito-acciones-derecha">
+                        <div class="carrito-acciones-total">
+                            <p>Total:</p>
+                            <p id="total">$</p>
+                        </div>
+                        <button id="carrito-acciones-comprar" class="carrito-acciones-comprar">Comprar ahora</button>
+                    </div>
+                </div>
             </div>
-            <div class="infoCart">
-                <h3>{{product.title}}</h3>
-                <p>{{product.description}}</p>
-                <p>${{product.price}}</p>
-                <p>Cantidad en el carrito: {{this.quantity}}</p>
-            </div>
-        </div>
-        {{/each}}
+        </main>
     </div>
-</div>

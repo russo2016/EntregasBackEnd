@@ -1,11 +1,12 @@
 import { Router } from "express";
-import Product from "../services/products.js";
-import Message from "../services/messages.js";
-import Cart from "../services/carts.js";
-import { ProductsModel } from "../models/products.js";
-import { CartsModel } from "../models/carts.js";
+import Product from "../services/products.services..js";
+import Message from "../services/messages.services.js";
+import Cart from "../services/carts.services.js";
+import { ProductsModel } from "../models/products.model.js";
+import { CartsModel } from "../models/carts.model.js";
 import UserModel  from "../models/user.model.js";
 import auth from "../middlewares/auth.js";
+import { createHash } from "../utils.js";
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -45,7 +46,7 @@ router.get("/products", async (req, res) => {
         }
         const productsData = await ProductsModel.paginate(
         parsedQuery(),{
-                limit: limit || 1,
+                limit: limit || 12,
                 page: page || 1,
                 sort: sort ? { price: isSorted() } : null,
                 lean: true
@@ -100,8 +101,8 @@ router.get("/carts/:id", async (req, res) => {
 router.post("/signup", async (req, res) => {
     const {first_name, last_name, email, age, password} = req.body;
     try{
-        const newUser = {first_name, last_name, email, age, password, role: "user"}
-        const user = new UserModel(newUser);
+        const newUser = {first_name, last_name, email, age, password, role: "user"};
+        const user = new UserModel({...newUser, password: createHash(password)});
         const response = await user.save();
         if(response === null){
             res.status(400).json({
@@ -110,7 +111,11 @@ router.post("/signup", async (req, res) => {
             });
         } else {
             req.session.user = email;
-            req.session.role = newUser.role || "user";
+            if (email === "adminCoder@coder.com"){
+                req.session.role = "admin";
+            }else{
+                req.session.role = newUser.role || "user";
+            }
             res.status(201).json({
                 success: true,
                 message: "Usuario creado con exito",
@@ -127,13 +132,20 @@ router.post("/signup", async (req, res) => {
 router.post("/login", async (req, res) => {
     const {email, password} = req.body;
     try{
-    const result = await UserModel.findOne({email, password});
+    const result = await UserModel.findOne({email});
     if ( result === null){
         res.status(400).json({
             success: false,
             message: "Usuario o contraseña incorrectos"
         });
     }else{
+        const isValidPassword  = compareSync(password, result.password);
+        if (!isValidPassword){
+            res.status(400).json({
+                success: false,
+                message: "Usuario o contraseña incorrectos"
+            });
+        }else{
         req.session.user = email;
         if (email === "adminCoder@coder.com"){
             req.session.role = "admin";
@@ -145,6 +157,7 @@ router.post("/login", async (req, res) => {
             message: "Usuario logueado con exito",
             user: result
         });
+    }
     }
     }catch(error){
         res.status(500).json(error);
