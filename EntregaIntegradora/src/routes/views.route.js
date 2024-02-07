@@ -107,7 +107,7 @@ router.post("/signup", (req, res, next) => {
       if (!user) {
         return res.status(400).json({ error: info.message });
       }
-      return res.status(200).json({ message: "Usuario creado con éxito" });
+      return res.status(200).json({ message: "Usuario creado" });
     })(req, res, next);
   });
 
