@@ -15,7 +15,9 @@ import loginRouter from './routes/login.route.js';
 import signupRouter from './routes/signup.route.js';
 import sessionRouter from './routes/session.route.js';
 import passport from 'passport';
-import initializePassport from './config/passport.config.js';
+import initializeGitHubPassport from './config/githubPassport.config.js';
+import initializePassport from "./config/passport.config.js";
+
 
 dotenv.config();
 
@@ -53,6 +55,7 @@ app.set("views",__dirname + "/views");
 app.set("view engine","handlebars")
 
 
+initializeGitHubPassport();
 initializePassport();
 app.use(session({
     store: MongoStore.create({
@@ -67,11 +70,7 @@ app.use(session({
     saveUninitialized: true,
 }));
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/",viewsRouter);
-app.use("/login",loginRouter);
-app.use("/signup",signupRouter);
-app.use("/api/products",productsRouter);
-app.use("/api/messages",messagesRouter);
-app.use("/api/carts",cartsRouter);
 app.use("/api/sessions", sessionRouter);

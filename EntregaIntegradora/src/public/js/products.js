@@ -11,6 +11,7 @@ if (logoutLink) {
         .then(data => {
             if (data.success) {
             window.location.href = '/login';
+            alert('Sesión cerrada con éxito');
             } else {
             console.error(data.message);
             }

@@ -7,6 +7,7 @@ import { CartsModel } from "../models/carts.model.js";
 import UserModel  from "../models/user.model.js";
 import auth from "../middlewares/auth.js";
 import { createHash, isValidPassword } from "../utils.js";
+import passport from "passport";
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -98,36 +99,17 @@ router.get("/carts/:id", async (req, res) => {
     }
 
 });
-router.post("/signup", async (req, res) => {
-    const {first_name, last_name, email, age, password} = req.body;
-    try{
-        const newUser = {first_name, last_name, email, age, password, role: "user"};
-        const user = new UserModel({...newUser,password: createHash(password)});
-        const response = await user.save();
-        if(response === null){
-            res.status(400).json({
-                success: false,
-                message: "Error al registrar el usuario"
-            });
-        } else {
-            req.session.user = email;
-            if (email === "adminCoder@coder.com"){
-                req.session.role = "admin";
-            }else{
-                req.session.role = newUser.role || "user";
-            }
-            res.status(201).json({
-                success: true,
-                message: "Usuario creado con exito",
-                user: response
-            });
-        }
-    }
-    catch(error){
-        res.status(500).json(error);
-    }
-}
-);
+router.post("/signup", (req, res, next) => {
+    passport.authenticate("register", (err, user, info) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      if (!user) {
+        return res.status(400).json({ error: info.message });
+      }
+      return res.status(200).json({ message: "Usuario creado con éxito" });
+    })(req, res, next);
+  });
 
 router.post("/login", async (req, res) => {
     const {email, password} = req.body;
