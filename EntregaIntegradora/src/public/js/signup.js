@@ -24,7 +24,7 @@ signupForm.addEventListener('submit', async (e) => {
     if(result.success){
         window.location.href = '/login';
     }else{
+        console.log(result.success);
         alert("error");
-        console.log(result);
     }
 });
