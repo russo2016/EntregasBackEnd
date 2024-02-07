@@ -15,7 +15,7 @@ router.get(
   async (req, res) => {
     req.session.user = req.user;
     req.session.admin = true;
-    res.redirect("/");
+    res.redirect("/products");
   }
 );
 

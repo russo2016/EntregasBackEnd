@@ -6,7 +6,7 @@ import { ProductsModel } from "../models/products.model.js";
 import { CartsModel } from "../models/carts.model.js";
 import UserModel  from "../models/user.model.js";
 import auth from "../middlewares/auth.js";
-import { createHash } from "../utils.js";
+import { createHash, isValidPassword } from "../utils.js";
 const router = Router();
 
 router.get("/", (req, res) => {
@@ -102,7 +102,7 @@ router.post("/signup", async (req, res) => {
     const {first_name, last_name, email, age, password} = req.body;
     try{
         const newUser = {first_name, last_name, email, age, password, role: "user"};
-        const user = new UserModel({...newUser, password: createHash(password)});
+        const user = new UserModel({...newUser,password: createHash(password)});
         const response = await user.save();
         if(response === null){
             res.status(400).json({
@@ -139,11 +139,11 @@ router.post("/login", async (req, res) => {
             message: "Usuario o contraseña incorrectos"
         });
     }else{
-        const isValidPassword  = compareSync(password, result.password);
-        if (!isValidPassword){
+        const isValid  = isValidPassword(result, password);
+        if (!isValid){
             res.status(400).json({
                 success: false,
-                message: "Usuario o contraseña incorrectos"
+                message: "contraseña incorrecta"
             });
         }else{
         req.session.user = email;

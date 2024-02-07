@@ -19,7 +19,11 @@ const loginForm = document.getElementById('login-form');
 
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    try{
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     postLogin(email, password);
+    }catch(error){
+        console.log(error);
+    }
 });
