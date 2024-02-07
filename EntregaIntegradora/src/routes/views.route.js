@@ -102,12 +102,12 @@ router.get("/carts/:id", async (req, res) => {
 router.post("/signup", (req, res) => {
     passport.authenticate("register", (err, user, info) => {
       if (err) {
-        return res.status(500).json({ error: err.message });
+        return res.status(500).json({ error: err.message, success: false });
       }
       if (!user) {
-        return res.status(400).json({ error: info.message });
+        return res.status(400).json({ error: info.message, success: false });
       }
-      return res.status(200).json({ message: "Usuario creado con éxito" });
+      return res.status(200).json({ message: "Usuario creado con éxito", success: true });
     })(req, res);
   });
   
