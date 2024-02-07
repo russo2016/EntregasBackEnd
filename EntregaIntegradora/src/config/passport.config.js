@@ -1,6 +1,6 @@
 import passport from "passport";
 import local from "passport-local";
-import User from "../models/user.model.js";
+import userService from "../models/user.model.js";
 import { createHash, isValidPassword } from "../utils.js";
 
 const LocalStrategy = local.Strategy;
@@ -17,10 +17,10 @@ const initializePassport = () => {
         const { first_name, last_name, email, age } = req.body;
         try {
 
-          const user = await User.findOne({ email: username });
+          const user = await userService.findOne({ email: username });
 
           if (user) {
-            return done(null, false, { message: "User already exists" });
+            return done(null, false, { message: "Ya existe el usuario" });
           }
           const newUser = {
             first_name,
@@ -29,8 +29,8 @@ const initializePassport = () => {
             age,
             password: createHash(password),
           };
-
-          let result = await User.create(newUser);
+        
+          let result = await userService.create(newUser);
           return done(null, result);
         } catch (error) {
           return done("Error al obtener el usuario", error);
@@ -44,7 +44,7 @@ const initializePassport = () => {
   });
 
   passport.deserializeUser(async (id, done) => {
-    let user = await User.findById(id);
+    let user = await userService.findById(id);
     done(null, user);
   });
 
@@ -58,7 +58,7 @@ const initializePassport = () => {
       },
       async (req, username, password, done) => {
         try {
-          const user = await User.findOne({ email: username });
+          const user = await userService.findOne({ email: username });
           if (!user) {
             return done(null, false, { message: "User not found" });
           }

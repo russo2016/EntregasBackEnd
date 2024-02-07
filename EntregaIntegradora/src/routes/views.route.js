@@ -99,18 +99,16 @@ router.get("/carts/:id", async (req, res) => {
     }
 
 });
-router.post("/signup", (req, res, next) => {
-    passport.authenticate("register", (err, user, info) => {
-      if (err) {
-        return res.status(500).json({ error: err.message });
-      }
-      if (!user) {
-        return res.status(400).json({ error: info.message });
-      }
-      return res.status(200).json({ message: "Usuario creado" });
-    })(req, res, next);
-  });
-
+router.post(
+    "/signup",
+    passport.authenticate("register", {
+      successRedirect: "/products",
+    }),
+    async (req, res) => {
+      res.send({ status: "success", mesage: "user registered" });
+    }
+  );
+  
 router.post("/login", async (req, res) => {
     const {email, password} = req.body;
     try{
