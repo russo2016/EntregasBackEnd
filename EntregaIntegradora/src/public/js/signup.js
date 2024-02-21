@@ -25,6 +25,6 @@ signupForm.addEventListener('submit', async (e) => {
         window.location.href = '/login';
     }else{
         console.log(result.success);
-        alert("error");
+        alert("Ya existe el usuario");
     }
 });

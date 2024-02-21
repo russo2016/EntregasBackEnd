@@ -2,6 +2,7 @@ import passport from "passport";
 import GitHubStrategy from "passport-github2";
 import userService from "../models/user.model.js";
 import * as dotenv from "dotenv";
+import { CartsModel } from "../models/carts.model.js";
 
 dotenv.config();
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
@@ -26,15 +27,24 @@ const initializePassport = () => {
           });
 
           if (!user) {
+            const newCart = new CartsModel();
+            await newCart.save();
             const newUser = {
               first_name: profile.displayName.split(" ")[0],
               last_name: profile.displayName.split(" ")[1],
               email: profile?.emails[0]?.value,
               age: 18,
               password: Math.random().toString(36).substring(7),
-              role: "user",
+              cart: newCart._id
             };
-            let result = await userService.create(newUser);
+            let result;
+            if (newUser.email === "adminCoder@coder.com"){
+              newUser.role = "admin";
+              result = await userService.create(newUser);
+            }else{
+              newUser.role = "user";
+              result = await userService.create(newUser);
+            }
             done(null, result);
           } else {
             done(null, user);
