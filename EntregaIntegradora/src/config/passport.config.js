@@ -50,14 +50,6 @@ const initializePassport = () => {
     )
   );
 
-  passport.serializeUser((user, done) => {
-    done(null, user._id);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    let user = await userService.findById(id);
-    done(null, user);
-  });
 
   passport.use(
     "login",
@@ -85,6 +77,16 @@ const initializePassport = () => {
       }
     )
   );
+
+
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    let user = await userService.findById(id);
+    done(null, user);
+  });
 };
 
 export default initializePassport;

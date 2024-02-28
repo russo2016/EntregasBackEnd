@@ -127,35 +127,18 @@ router.post("/signup", async (req, res) => {
   });
   
 router.post("/login", async (req, res) => {
-    const {email, password} = req.body;
     try{
-    const result = await UserModel.findOne({email});
-    if ( result === null){
-        res.status(400).json({
-            success: false,
-            message: "Usuario o contraseña incorrectos"
-        });
-    }else{
-        const isValid  = isValidPassword(result, password);
-        if (!isValid){
-            res.status(400).json({
-                success: false,
-                message: "contraseña incorrecta"
-            });
-        }else{
-        req.session.user = email;
-        if (email === "adminCoder@coder.com"){
-            req.session.role = "admin";
-        }else{
-            req.session.role = result.role || "user";
-        }
-        res.status(200).json({
-            success: true,
-            message: "Usuario logueado con exito",
-            user: result
-        });
-    }
-    }
+        passport.authenticate("login", (err, user, info) => {
+            if (err) {
+            return res.status(500).json({ error: err.message, success: false });
+            }
+            if (!user) {
+            return res.status(400).json({ error: info.message, success: false });
+            }
+            req.session.user = user
+            req.user = req.session.user
+            return res.status(200).json({ message: "Logueado con exito", success: true });
+        })(req, res);
     }catch(error){
         res.status(500).json(error);
     }
@@ -177,24 +160,16 @@ router.post("/logout", async (req, res) => {
 });
 
 router.get("/api/sessions/current", async (req, res) => {
-    let user = await UserModel.findOne({email: req.session.user});
-    if (!user){
-       let email = req.session.user.email
-       user = await UserModel.findOne({email: email});
-    }
-    try{
-        res.render("session",{
-            title: "Info de la sesion",
-            name: user.first_name,
-            last_name: user.last_name,
-            email: user.email,
-            age: user.age,
-            role: user.role,
-            cart: user.cart,
-        })
-    }catch(error){
-        console.log(error.message);    
+    if (!req.session.user) {
+        res.status(401).json({ message: "No hay una sesión activa" });
+    } else {
+        const session = {
+            message: "Sesión activa",
+            user: req.session.user,
+        };
+        res.status(200).json(session);
     }
 });
+
 
 export default router;
