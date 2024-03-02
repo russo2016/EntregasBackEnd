@@ -70,6 +70,10 @@ app.use(passport.session());
 app.use("/",viewsRouter);
 app.use("/api/sessions", sessionRouter);
 app.use("/", sessionRouter);
+app.use("/api/products",productsRouter);
+app.use("/api/messages",messagesRouter);
+app.use("/api/carts",cartsRouter);
+
 app.get("*", (req, res) => {
     res.status(404).send({error: "Not found"});
 });
