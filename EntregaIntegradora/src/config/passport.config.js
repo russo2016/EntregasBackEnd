@@ -63,16 +63,24 @@ const initializePassport = () => {
         try {
           const user = await userService.findOne({ email: username });
           if (!user) {
+            req.success = false;
+            req.message = "Usuario no encontrado"
             return done(null, false, { message: "Usuario no encontrado" });
           }
 
           if (!isValidPassword(user, password)) {
-            return done(null, false, { message: "Contraseña incorrecta" });
-          } else {
-            return done(null, user);
-          }
+            req.success = false;
+            req.message = "Usuario o contraseña incorrecta"
+            return done(null, false, { message: "Usuario o contraseña incorrecta" });
+          } 
+          req.success = true;
+          req.message = "Logueado con exito"
+          return done(null, user, { message: "Logueado con exito" });
         } catch (error) {
-          return done("Error al obtener el usuario", error);
+          console.log(error);
+          req.success = false;
+          req.message = "Error al obtener el usuario"
+          return done(null, false, { message: "Error al obtener el usuario" });
         }
       }
     )

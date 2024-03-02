@@ -1,4 +1,5 @@
 async function postLogin(email, password){
+    try{
     const response = await fetch('/login', {
         method: 'POST',
         headers: {
@@ -13,6 +14,9 @@ async function postLogin(email, password){
         alert("Usuario o contraseña incorrectos");
     }
     return result;
+}catch(error){
+    console.log(error);
+}
 }
 
 const loginForm = document.getElementById('login-form');
