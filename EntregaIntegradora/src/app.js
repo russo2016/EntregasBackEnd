@@ -11,13 +11,10 @@ import { __dirname } from './utils.js';
 import MongoStore from 'connect-mongo';
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
-import loginRouter from './routes/login.route.js';
-import signupRouter from './routes/signup.route.js';
 import sessionRouter from './routes/session.route.js';
 import passport from 'passport';
 import initializeGitHubPassport from './config/githubPassport.config.js';
 import initializePassport from "./config/passport.config.js";
-
 
 dotenv.config();
 
@@ -37,7 +34,6 @@ io.on("connection", (socket) => {
 	console.log("Se conecto un nuevo ususario");
 });
 
-
 const DB_connection = MongoSingleton.getInstance();
 
 app.use(express.json());
@@ -48,7 +44,6 @@ app.use(express.static(__dirname + "/public"));
 app.engine("handlebars",handlebars.engine());
 app.set("views",__dirname + "/views");
 app.set("view engine","handlebars")
-
 
 initializeGitHubPassport();
 initializePassport();
