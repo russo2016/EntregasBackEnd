@@ -1,0 +1,57 @@
+<div>
+    <h1>Add Product</h1>
+    <form>
+        <label for="title">Title:</label><br>
+        <input type="text" id="title" name="title" required><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" required></textarea><br>
+        
+        <label for="price">Price:</label><br>
+        <input type="number" id="price" name="price" min="0" step="0.01" required><br>
+        
+        <label for="thumbnail">Thumbnail URL:</label><br>
+        <input type="text" id="thumbnail" name="thumbnail"><br>
+        
+        <label for="code">Product Code:</label><br>
+        <input type="text" id="code" name="code" required><br>
+        
+        <label for="stock">Stock:</label><br>
+        <input type="number" id="stock" name="stock" min="0" required><br><br>
+        
+        <button id="saveProduct" type="submit">Add Product</button>
+    </form>
+    <form id="delete" style="flex: 1; margin-left: 20px;">
+		<h3>Eliminar producto:</h3>
+		<label>Product ID:</label>
+		<input type="text" id="productId" />
+
+		<button id="deleteProduct" type="button">Delete Product</button>
+	</form>
+        <form>
+            <h3>Actualizar producto</h3>
+        <label for="id">id:</label><br>
+        <input type="text" id="idPut" name="id" required><br>
+
+        <label for="title">Title:</label><br>
+        <input type="text" id="titlePut" name="title" required><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="descriptionPut" name="description" required></textarea><br>
+        
+        <label for="price">Price:</label><br>
+        <input type="number" id="pricePut" name="price" min="0" step="0.01" required><br>
+        
+        <label for="thumbnail">Thumbnail URL:</label><br>
+        <input type="text" id="thumbnailPut" name="thumbnail"><br>
+        
+        <label for="code">Product Code:</label><br>
+        <input type="text" id="codePut" name="code" required><br>
+        
+        <label for="stock">Stock:</label><br>
+        <input type="number" id="stockPut" name="stock" min="0" required><br><br>
+        
+        <button id="updateProduct" type="submit">Update Product</button>
+    </form>
+</div> 
+<script src="/js/realtime.js"></script> 

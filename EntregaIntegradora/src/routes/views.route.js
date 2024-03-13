@@ -1,11 +1,12 @@
 import { Router } from "express";
 import * as controller from "../controllers/views.controllers.js";
-import isAuthenticated from "../middlewares/isAuthenticated.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
-router.get("/products", controller.getProducts);
-router.get("/messages", controller.getMessages);
-router.get("/carts/:id", controller.getCartById);
+router.get("/products",auth("PUBLIC"), controller.getProducts);
+router.get("/messages",auth("PUBLIC"), controller.getMessages);
+router.get("/carts/:id",auth("PUBLIC"), controller.getCartById);
+router.get("/realtime",auth("PUBLIC"), controller.realtime);
 
 export default router;

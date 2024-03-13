@@ -1,34 +1,9 @@
-import Product from "../services/products.services.js";
-import Message from "../services/messages.services.js";
-import Cart from "../services/carts.services.js";
-import { ProductsModel } from "../models/products.model.js";
-import { CartsModel } from "../models/carts.model.js";
-import UserModel  from "../models/user.model.js";
-import auth from "../middlewares/auth.js";
-import { createHash, isValidPassword } from "../utils.js";
+import Product from "../dao/database/services/products.services.js";
+import Message from "../dao/database/services/messages.services.js";
+import Cart from "../dao/database/services/carts.services.js";
+import { ProductsModel } from "../dao/database/models/products.model.js";
+import { CartsModel } from "../dao/database/models/carts.model.js";
 import passport from "passport";
-
-export const getSignupPage = async (req, res) => {
-    try {
-        res.render("signup", {
-            title: "Regístrese",
-            style: "css/signup.css"
-        });
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
-
-export const getLoginPage = async (req, res) => {
-    try {
-        res.render("login", {
-            title: "Inicie sesión",
-            style: "css/login.css"
-        });
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
 
 export const getProducts = async (req, res) => {
     const product = new Product();
@@ -107,65 +82,8 @@ export const getCartById = async (req, res) => {
     }
 };
 
-export const signup = async (req, res) => {
-    try {
-        passport.authenticate("register", (err, user, info) => {
-            if (err) {
-                return res.status(500).json({ error: err.message, success: false });
-            }
-            if (!user) {
-                return res.status(400).json({ error: info.message, success: false });
-            }
-            return res.status(200).json({ message: "Usuario creado con éxito", success: true });
-        })(req, res);
-    } catch (error) {
-        res.status(500).json(error);
-    }
+export const realtime = async (req, res) => {
+    res.render("realtimeProducts", {
+        title: "Chat en tiempo real",
+    });
 };
-
-export const login = async (req, res, next) => {
-    passport.authenticate("login", (err, user, info) => {
-        if (err) {
-            return res.status(500).json({ error: err.message, success: false });
-        }
-        if (!user) {
-            return res.status(400).json({ error: info.message, success: false });
-        }
-        req.login(user, (err) => {
-            if (err) {
-                return res.status(500).json({ error: err.message, success: false });
-            }
-            req.session.user = req.user;
-            return res.status(200).json({ message: "Inicio de sesión exitoso", success: true });
-        });
-    })(req, res, next);
-};
-
-
-export const logout = async (req, res) => {
-    try {
-        req.session.destroy((err) => {
-            if (err) {
-                console.log(err);
-                res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
-            } else {
-                res.json({ success: true, message: 'Sesión cerrada correctamente' });
-            }
-        });
-    } catch (error) {
-        res.status(500).json(error);
-    }
-};
-
-export const getCurrentSession = async (req, res) => {
-    if (!req.isAuthenticated()) {
-        res.status(401).json({ message: "No hay una sesión activa" });
-    } else {
-        const session = {
-            message: "Sesión activa",
-            user: req.user,
-        };
-        res.status(200).json(session);
-    }
-};
-

@@ -1,4 +1,4 @@
-import Cart from "../services/carts.services.js";
+import Cart from "../dao/database/services/carts.services.js";
 
 const cart = new Cart();
 

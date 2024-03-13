@@ -1,8 +1,8 @@
 import passport from "passport";
 import GitHubStrategy from "passport-github2";
-import userService from "../models/user.model.js";
+import userService from "../dao/database/models/user.model.js";
 import * as dotenv from "dotenv";
-import { CartsModel } from "../models/carts.model.js";
+import { CartsModel } from "../dao/database/models/carts.model.js";
 
 dotenv.config();
 const GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;

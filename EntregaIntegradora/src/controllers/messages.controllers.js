@@ -1,4 +1,4 @@
-import Messages from "../services/messages.services.js";
+import Messages from "../dao/database/services/messages.services.js";
 
 const messageService = new Messages();
 
