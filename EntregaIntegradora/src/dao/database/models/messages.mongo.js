@@ -1,23 +1,23 @@
-import messagesModel from "./user.model.js";
+import {MessagesModel} from "./messages.model.js";
 
-export default class Users {
+export default class Messages {
   constructor() {}
 
   get = async () => {
-    return await messagesModel.find();
+    return await MessagesModel.find().lean();
   };
 
   create = async (message) => {
-    const newMessages = new messagesModel(message);
+    const newMessages = new MessagesModel(message);
     await newMessages.save();
     return newMessages;
   };
 
   modify = async (id, message) => {
-    return await messagesModel.findByIdAndUpdate(id, message, { new: true });
+    return await MessagesModel.findByIdAndUpdate(id, message, { new: true });
   };
 
   delete = async (id) => {
-    return await messagesModel.findByIdAndDelete(id);
+    return await MessagesModel.findByIdAndDelete(id);
   };
 }

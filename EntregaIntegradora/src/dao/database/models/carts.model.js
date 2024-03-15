@@ -34,4 +34,6 @@ const cartSchema = new moongose.Schema({
 );
 
 
-export const CartsModel = moongose.model(cartsCollection, cartSchema);
+const CartsModel = moongose.model(cartsCollection, cartSchema);
+
+export default CartsModel;

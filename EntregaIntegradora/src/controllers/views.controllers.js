@@ -2,7 +2,7 @@ import {ProductService} from "../repository/index.js";
 import {MessageService} from "../repository/index.js";
 import {cartService} from "../repository/index.js";
 import { ProductsModel } from "../dao/database/models/products.model.js";
-import { CartsModel } from "../dao/database/models/carts.model.js";
+import  CartsModel  from "../dao/database/models/carts.model.js";
 import passport from "passport";
 
 export const getProducts = async (req, res) => {

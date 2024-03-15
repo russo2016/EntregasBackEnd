@@ -6,18 +6,18 @@ export default class Cart {
     }
 
     async getAll() {
-        const carts = await this.dao.find().lean();
+        const carts = await this.dao.get();
         return carts;
     }
 
     async getById(id) {
-        const cart = await this.dao.findById(id).lean();
+        const cart = await this.dao.findOne(id);
         return cart;
     }
 
     addProductToCart = async (cid, pid) => {
         try {
-            const cart = await this.getById(cid);
+            const cart = await this.dao.findOne(cid);
             const { product } = cart;
     
             const productIndex = product.findIndex(
@@ -33,7 +33,7 @@ export default class Cart {
                 });
             }
     
-            await this.updateCart(cid,cart);
+            await this.dao.modify(cid,cart);
             return cart;
         } catch (err) {
             console.log(err);
@@ -42,10 +42,13 @@ export default class Cart {
     
     async updateProductFromCart(cid, pid, quantity) {
         try{
-            const cart = await this.dao.updateOne(
-                { _id: cid, "product.product": pid },
+            const cart = await this.dao.modify(
+
+                { _id: cid, "product.$.product": pid },
+                
                 { $set: { "product.$.quantity": quantity } }
-            );
+                
+                );
             return cart;
         } catch (err) {
             console.log(err);
@@ -59,7 +62,7 @@ export default class Cart {
     }
 
     async updateCart(id, cart) {
-        const result = await this.dao.updateOne({ _id: id }, cart);
+        const result = await this.dao.modify({ _id: id }, cart);
         return result;
     }
 
@@ -70,7 +73,7 @@ export default class Cart {
 
     async deleteProductsFromCart(id) {
         try {
-            const cart = await this.dao.findById(id);
+            const cart = await this.dao.findOne(id);
             if (!cart) {
                 return { error: 'Carrito no encontrado' };
             }
@@ -86,7 +89,7 @@ export default class Cart {
 
     async removeProductFromCart(cid, pid) {
         try{
-            const cart = await this.dao.findById(cid);
+            const cart = await this.dao.findOne(cid);
 
             if (!cart) {
                 return {success:false, message: 'Carrito no encontrado' };
@@ -97,7 +100,7 @@ export default class Cart {
 
             if (productIndex !== -1){
                 cart.product.splice(productIndex, 1);
-                await cart.save();
+                await this.dao.modify(id,cart)
 
                 return {success:true, message: 'Producto eliminado del carrito'};
             } else{

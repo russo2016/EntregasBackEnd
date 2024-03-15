@@ -2,7 +2,7 @@ import passport from "passport";
 import local from "passport-local";
 import userService from "../dao/database/models/user.model.js";
 import { createHash, isValidPassword } from "../utils.js";
-import { CartsModel } from "../dao/database/models/carts.model.js";
+import  CartsModel  from "../dao/database/models/carts.model.js";
 
 const LocalStrategy = local.Strategy;
 

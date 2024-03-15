@@ -7,19 +7,13 @@ export default class Message {
     }
 
     async getAll() {
-        const messages = await this.dao.find().lean();
+        const messages = await this.dao.get();
         return messages;
-    }
-    
-    async getById(id) {
-        const message = await this.dao.findById(id).lean();
-        return message;
     }
 
     async saveMessage(message) {
-        const newMessage = new this.dao(message);
-        let result = await newMessage.save();
-        return result;
+        const newMessage = new this.dao.create(message);
+        return newMessage;
     }
 
     async updateMessage(id, message) {

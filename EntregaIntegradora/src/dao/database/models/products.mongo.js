@@ -1,27 +1,28 @@
-import productsModel from "./user.model.js";
+import {ProductsModel} from "./products.model.js";
 
-export default class Users {
+export default class Products {
   constructor() {}
 
   get = async () => {
-    return await productsModel.find();
+    return await ProductsModel.find().lean();
   };
 
   findOne = async (id) => {
-    return await productsModel.findOne(id);
+    return await ProductsModel.findById(id).lean();
   };
 
   create = async (product) => {
-    const newProduct = new productsModel(product);
+    const newProduct = new ProductsModel(product);
     await newProduct.save();
     return newProduct;
   };
 
+
   modify = async (id, product) => {
-    return await productsModel.findByIdAndUpdate(id, product, { new: true });
+    return await ProductsModel.findByIdAndUpdate(id, product, { new: true });
   };
 
   delete = async (id) => {
-    return await productsModel.findByIdAndDelete(id);
+    return await ProductsModel.findByIdAndDelete(id);
   };
 }

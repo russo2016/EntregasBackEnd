@@ -4,7 +4,7 @@ export default class Users {
   constructor() {}
 
   get = async () => {
-    return await userModel.find();
+    return await userModel.find().lean();
   };
 
   findOne = async (parameter) => {

@@ -1,14 +1,14 @@
-import cartModel from "./user.model.js";
+import cartModel from "./carts.model.js";
 
-export default class Users {
+export default class Carts {
   constructor() {}
 
   get = async () => {
-    return await cartModel.find();
+    return await cartModel.find().lean();
   };
 
   findOne = async (id) => {
-    return await cartModel.findOne(id);
+    return await cartModel.findById(id).lean();
   };
 
   create = async (cart) => {
