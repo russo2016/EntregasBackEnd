@@ -1,34 +1,34 @@
-import { ProductsModel } from "../models/products.model.js";
+//import { ProductsModel } from "../models/products.model.js";
 
 export default class Product{
     
-    constructor(){
-        console.log("Product DAO created");
+    constructor(dao) {
+        this.dao = dao;
     }
 
     async getAll(){
-        const products = await ProductsModel.find().lean();
+        const products = await this.dao.find().lean();
         return products;
     }
     
     async getById(id){
-        const product = await ProductsModel.findById(id).lean();
+        const product = await this.dao.findById(id).lean();
         return product;
     }
 
     async saveProducts(product){
-        const newProduct = new ProductsModel(product);
+        const newProduct = new this.dao(product);
         let result = await newProduct.save();
         return result;
     }
 
     async updateProduct(id, product){
-        const result = await ProductsModel.updateOne({_id:id},product);
+        const result = await this.dao.updateOne({_id:id},product);
         return result;
     }
 
     async deleteProduct(id){
-        const result = await ProductsModel.deleteOne({_id:id});
+        const result = await this.dao.deleteOne({_id:id});
         return result;
     }
 }

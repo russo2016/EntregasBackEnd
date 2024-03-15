@@ -1,6 +1,6 @@
-import Messages from "../dao/database/services/messages.services.js";
+import {MessageService} from "../repository/index.js";
 
-const messageService = new Messages();
+const messageService = MessageService;
 
 export const getAllMessages = async (req, res) => {
     try {

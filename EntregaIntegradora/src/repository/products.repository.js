@@ -1,34 +1,34 @@
-import ProductsDTO from '../dao/dto/productsDTO.js';
+//import { ProductsModel } from "../models/products.model.js";
 
-export default class ProductsRepository{
-    constructor(productsDAO){
-        this.productsDAO = productsDAO;
+export default class Product{
+    
+    constructor(dao) {
+        this.dao = dao;
     }
 
-    async getProducts(){
-        const products = await this.productsDAO.getProducts();
+    async getAll(){
+        const products = await this.dao.find().lean();
         return products;
     }
-
-    async getProduct(id){
-        const product = await this.productsDAO.getProduct(id);
+    
+    async getById(id){
+        const product = await this.dao.findById(id).lean();
         return product;
     }
 
-    async saveProduct(product){
-        const newProduct = await ProductsDTO(product);
-        const response = await this.productsDAO.saveProduct(newProduct);
-        return response;
+    async saveProducts(product){
+        const newProduct = new this.dao(product);
+        let result = await newProduct.save();
+        return result;
     }
 
     async updateProduct(id, product){
-        const newProduct = await ProductsDTO(product);
-        const response = await this.productsDAO.updateProduct(id, newProduct);
-        return response;
+        const result = await this.dao.updateOne({_id:id},product);
+        return result;
     }
 
     async deleteProduct(id){
-        const response = await this.productsDAO.deleteProduct(id);
-        return response;
+        const result = await this.dao.deleteOne({_id:id});
+        return result;
     }
-};
+}

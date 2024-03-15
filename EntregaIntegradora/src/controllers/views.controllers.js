@@ -1,12 +1,12 @@
-import Product from "../dao/database/services/products.services.js";
-import Message from "../dao/database/services/messages.services.js";
-import Cart from "../dao/database/services/carts.services.js";
+import {ProductService} from "../repository/index.js";
+import {MessageService} from "../repository/index.js";
+import {cartService} from "../repository/index.js";
 import { ProductsModel } from "../dao/database/models/products.model.js";
 import { CartsModel } from "../dao/database/models/carts.model.js";
 import passport from "passport";
 
 export const getProducts = async (req, res) => {
-    const product = new Product();
+    const product = ProductService;
     try {
         const { limit, page, query, sort } = req.query;
         const parsedQuery = () => {
@@ -54,7 +54,7 @@ export const getProducts = async (req, res) => {
 
 
 export const getMessages = async (req, res) => {
-    const messages = new Message();
+    const messages = MessageService;
     const result = await messages.getAll();
     try {
         res.status(200).render("messages", {
@@ -69,7 +69,7 @@ export const getMessages = async (req, res) => {
 
 export const getCartById = async (req, res) => {
     const { id } = req.params;
-    const cart = new Cart();
+    const cart = cartService;
     const result = await CartsModel.findById(id).populate("product.product").lean();
     try {
         res.status(200).render("carts", {

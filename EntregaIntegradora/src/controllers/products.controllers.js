@@ -1,6 +1,6 @@
-import Product from "../dao/database/services/products.services.js";
+import {ProductService} from "../repository/index.js";
 
-const productService = new Product();
+const productService = ProductService;
 
 export const getAllProducts = async (req, res) => {
     try {

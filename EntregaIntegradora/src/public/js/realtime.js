@@ -68,17 +68,25 @@ deleteProduct.addEventListener("click", (e) => {
 });
 
 updateProduct.addEventListener("click", (e) => {
-    e.preventDefault
-    try{
-        const name = document.getElementById("namePut");
+    e.preventDefault();
+    try {
+        const title = document.getElementById("titlePut");
         const description = document.getElementById("descriptionPut");
         const price = document.getElementById("pricePut");
         const thumbnail = document.getElementById("thumbnailPut");
         const id= document.getElementById("idPut");
         const stock = document.getElementById("stockPut");
+        const code = document.getElementById("codePut");
 
-        const product = {name, description, price, thumbnail, code, stock};
-        fetch(`/api/products/${id}`, {
+        const product = {
+            title : title.value,
+            description : description.value,
+            price : price.value,
+            thumbnail : thumbnail.value,
+            code : code.value,
+            stock : stock.value
+        };
+        fetch(`/api/products/${id.value}`, {
         method: "PUT",
         body: JSON.stringify(product),
         headers: {

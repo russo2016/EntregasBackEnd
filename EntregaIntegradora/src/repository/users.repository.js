@@ -1,29 +1,33 @@
-import UserDTO from '../dao/dto/usersDTO.js';
+//import UserModel from '../user.mongo.js';
 
-export default class UserRepository{
-    constructor(UserDAO){
-        this.userDAO = new UserDAO();
+export default class UsersService {
+    constructor(dao) {
+        this.dao = dao;
     }
 
-    async getUser(id){
-        const user = await this.userDAO.getUser(id);
+    async getUsers(){
+        getUsers = await this.dao.get();
+        return getUsers;
+    }
+
+    async getUser(email){
+        const user = await this.dao.findOne(email);
         return user;
     }
 
     async saveUser(user){
-        const newUser = await UserDTO(user);
-        const response = await this.userDAO.saveUser(newUser);
+        const newUser = new this.dao(user);
+        const response = await newUser.create();
         return response;
     }
 
     async updateUser(id, user){
-        const newUser = await UserDTO(user);
-        const response = await this.userDAO.updateUser(id, newUser);
+        const response = await this.dao.modify(id, user);
         return response;
     }
 
     async deleteUser(id){
-        const response = await this.userDAO.deleteUser(id);
+        const response = await this.dao.delete(id);
         return response;
     }
 }

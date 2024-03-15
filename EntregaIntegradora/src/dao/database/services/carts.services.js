@@ -1,17 +1,17 @@
-import { CartsModel } from "../models/carts.model.js";
+//import { CartsModel } from "../models/carts.model.js";
 
 export default class Cart {
-    constructor() {
-        console.log("Cart DAO created");
+    constructor(dao) {
+        this.dao = dao;
     }
 
     async getAll() {
-        const carts = await CartsModel.find().lean();
+        const carts = await this.dao.find().lean();
         return carts;
     }
 
     async getById(id) {
-        const cart = await CartsModel.findById(id).lean();
+        const cart = await this.dao.findById(id).lean();
         return cart;
     }
 
@@ -42,7 +42,7 @@ export default class Cart {
     
     async updateProductFromCart(cid, pid, quantity) {
         try{
-            const cart = await CartsModel.updateOne(
+            const cart = await this.dao.updateOne(
                 { _id: cid, "product.product": pid },
                 { $set: { "product.$.quantity": quantity } }
             );
@@ -53,24 +53,24 @@ export default class Cart {
     }
 
     async saveCart(cart) {
-        const newCart = new CartsModel(cart);
+        const newCart = new this.dao(cart);
         let result = await newCart.save();
         return result;
     }
 
     async updateCart(id, cart) {
-        const result = await CartsModel.updateOne({ _id: id }, cart);
+        const result = await this.dao.updateOne({ _id: id }, cart);
         return result;
     }
 
     /*async deleteCart(id) {
-        const result = await CartsModel.deleteOne({ _id: id });
+        const result = await this.dao.deleteOne({ _id: id });
         return result;
     }*/
 
     async deleteProductsFromCart(id) {
         try {
-            const cart = await CartsModel.findById(id);
+            const cart = await this.dao.findById(id);
             if (!cart) {
                 return { error: 'Carrito no encontrado' };
             }
@@ -86,7 +86,7 @@ export default class Cart {
 
     async removeProductFromCart(cid, pid) {
         try{
-            const cart = await CartsModel.findById(cid);
+            const cart = await this.dao.findById(cid);
 
             if (!cart) {
                 return {success:false, message: 'Carrito no encontrado' };

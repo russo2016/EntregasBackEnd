@@ -1,6 +1,6 @@
-import Cart from "../dao/database/services/carts.services.js";
+import {cartService} from "../repository/index.js";
 
-const cart = new Cart();
+const cart = cartService;
 
 export const getAllCarts = async (req, res) => {
     try {
