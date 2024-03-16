@@ -80,10 +80,12 @@ export const getCurrentSession = async (req, res) => {
             last_name: req.user.last_name,
             email: req.user.email,
             age: req.user.age,
-            role: req.user.role}
+            role: req.user.role,
+            cart: req.user.cart
+        }
         const session = {
             message: "Sesión activa",
-            name: user
+            user: user
         };
         res.status(200).json(session);
     }

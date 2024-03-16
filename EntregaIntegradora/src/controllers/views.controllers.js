@@ -8,7 +8,6 @@ export const getProducts = async (req, res) => {
     const product = ProductService;
     try {
         const { limit, page, query, sort } = req.query;
-        const cart = req.session.user.cart;
         const parsedQuery = () => {
             if (query) {
                 return JSON.parse(query);
@@ -45,7 +44,6 @@ export const getProducts = async (req, res) => {
             nextPage,
             prevPage,
             totalPages,
-            cart : cart,
             style: "css/products.css"
         });
     } catch (error) {
@@ -72,10 +70,15 @@ export const getCartById = async (req, res) => {
     const { id } = req.params;
     const cart = cartService;
     const result = await CartsModel.findById(id).populate("product.product").lean();
+    let totalPrice = 0;
+        result.product.forEach(item => {
+            totalPrice += item.product.price * item.quantity;
+        });
     try {
         res.status(200).render("carts", {
             title: "Carrito",
             products: result.product,
+            totalPrice: totalPrice,
             style: "../css/carts.css"
         });
     } catch (error) {

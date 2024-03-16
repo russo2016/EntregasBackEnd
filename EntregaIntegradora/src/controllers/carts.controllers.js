@@ -1,4 +1,5 @@
 import {cartService} from "../repository/index.js";
+import Ticket from "../dao/database/services/ticket.services.js";
 
 const cart = cartService;
 
@@ -72,5 +73,19 @@ export const removeProductFromCart = async (req, res) => {
         res.status(200).json(response);
     } catch (error) {
         res.status(500).json(error);
+    }
+};
+
+export const purchase = async (req, res) => {
+    const { cid } = req.params;
+    const ticket = new Ticket();
+    try {
+        const response = await ticket.createTicket(req, res);
+        console.log(response);
+        if (response) {
+            res.status(200).json(response);
+        }
+    } catch (error) {
+        res.status(500).json(error.message);
     }
 };

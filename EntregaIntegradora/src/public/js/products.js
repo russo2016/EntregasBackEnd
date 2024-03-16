@@ -1,5 +1,6 @@
 const logoutLink = document.getElementById('logout');
-const addProductToCartbtn = document.getElementById("addProductToCart");
+const addProductButtons = document.querySelectorAll(".addProductToCart")
+const btnToCart = document.getElementById('btnToCart');
 
 if (logoutLink) {
     logoutLink.addEventListener('click', function(e) {
@@ -23,23 +24,64 @@ if (logoutLink) {
     });
 }
 
-if (addProductToCartbtn) {
-    addProductToCartbtn.addEventListener('click', function(e) {
+addProductButtons.forEach((button) => {
+    button.addEventListener('click', function(e) {
         e.preventDefault();
-        try {
-            const productId = document.getElementById("productID").textContent.trim()
-            const id = document.getElementById("cartID").textContent.trim();
-            fetch(`/api/carts/${id}/products/${productId}`, {
-                method: "POST",
+        const pid = e.target.dataset.productId;
+        fetch('/api/sessions/current')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener la sesión del usuario');
+                }
+                return response.json();
             })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data) {
-                    alert("Producto agregado al carrito");
+            .then(data => {
+                if (data.user) {
+                    const cart = data.user.cart;
+                    fetch(`/api/carts/${cart}/products/${pid}`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.message === "success") {
+                            alert('Producto agregado al carrito');
+                        } else {
+                            console.error(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error al agregar producto al carrito:', error);
+                    });
+                } else {
+                    console.error('No se recibió información de usuario válida');
                 }
             })
-        } catch (error) {
-            console.log(error);
-        }
+            .catch(error => {
+                console.error('Error al obtener la sesión del usuario:', error);
+            });
+    });
+});
+
+if (btnToCart) {
+    btnToCart.addEventListener('click', function(e) {
+        e.preventDefault();
+        fetch('/api/sessions/current')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('No se pudo obtener la sesión del usuario');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.user) {
+                    const cart = data.user.cart;
+                    window.location.href = `/carts/${cart}`;
+                } else {
+                    console.error('No se recibió información de usuario válida');
+                }
+            })
+            .catch(error => {
+                console.error('Error al obtener la sesión del usuario:', error);
+            });
     });
 }
