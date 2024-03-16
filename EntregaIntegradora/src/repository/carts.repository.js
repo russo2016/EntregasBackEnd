@@ -1,4 +1,3 @@
-//import { CartsModel } from "../models/carts.model.js";
 export default class Cart {
     constructor(dao) {
         this.dao = dao;
@@ -63,11 +62,6 @@ export default class Cart {
         const result = await this.dao.modify({ _id: id }, cart);
         return result;
     }
-
-    /*async deleteCart(id) {
-        const result = await this.dao.deleteOne({ _id: id });
-        return result;
-    }*/
 
     async deleteProductsFromCart(id) {
         try {

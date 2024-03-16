@@ -77,7 +77,6 @@ export const removeProductFromCart = async (req, res) => {
 };
 
 export const purchase = async (req, res) => {
-    const { cid } = req.params;
     const ticket = new Ticket();
     try {
         const response = await ticket.createTicket(req, res);

@@ -1,4 +1,3 @@
-//import { CartsModel } from "../models/carts.model.js";
 
 export default class Cart {
     constructor(dao) {
