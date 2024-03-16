@@ -1,5 +1,4 @@
 //import { CartsModel } from "../models/carts.model.js";
-
 export default class Cart {
     constructor(dao) {
         this.dao = dao;
@@ -33,7 +32,7 @@ export default class Cart {
                 });
             }
     
-            await this.dao.modify(cid,cart);
+            await this.dao.add(cid,cart);
             return cart;
         } catch (err) {
             console.log(err);
@@ -44,7 +43,7 @@ export default class Cart {
         try{
             const cart = await this.dao.modify(
 
-                { _id: cid, "product.$.product": pid },
+                { _id: cid, "product.product": pid },
                 
                 { $set: { "product.$.quantity": quantity } }
                 
@@ -56,9 +55,8 @@ export default class Cart {
     }
 
     async saveCart(cart) {
-        const newCart = new this.dao(cart);
-        let result = await newCart.save();
-        return result;
+        const newCart = await this.dao.create(cart);
+        return newCart;
     }
 
     async updateCart(id, cart) {
@@ -78,7 +76,7 @@ export default class Cart {
                 return { error: 'Carrito no encontrado' };
             }
             cart.product = [];
-            const result = await cart.save();
+            const result = await this.dao.modify({_id:id},{$set: { product: [] }});
 
             return result;
         } catch (error) {
@@ -100,7 +98,7 @@ export default class Cart {
 
             if (productIndex !== -1){
                 cart.product.splice(productIndex, 1);
-                await this.dao.modify(id,cart)
+                await this.dao.modify({_id:cid},{$pull: { product: { product: pid } }});
 
                 return {success:true, message: 'Producto eliminado del carrito'};
             } else{

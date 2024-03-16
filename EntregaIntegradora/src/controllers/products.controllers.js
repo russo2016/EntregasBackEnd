@@ -49,6 +49,7 @@ export const createProduct = async (req, res) => {
         const response = await productService.saveProducts({ title, description, price, thumbnail, code, stock });
         res.status(200).json(response);
     } catch (error) {
+        console.log(error.message)
         res.status(500).json(error);
     }
 };

@@ -3,12 +3,12 @@ import {MessageService} from "../repository/index.js";
 import {cartService} from "../repository/index.js";
 import { ProductsModel } from "../dao/database/models/products.model.js";
 import  CartsModel  from "../dao/database/models/carts.model.js";
-import passport from "passport";
 
 export const getProducts = async (req, res) => {
     const product = ProductService;
     try {
         const { limit, page, query, sort } = req.query;
+        const cart = req.session.user.cart;
         const parsedQuery = () => {
             if (query) {
                 return JSON.parse(query);
@@ -39,12 +39,13 @@ export const getProducts = async (req, res) => {
         const products = docs;
         res.status(200).render("products", {
             title: "Listado de productos",
-            products,
+            products : products,
             hasNextPage,
             hasPrevPage,
             nextPage,
             prevPage,
             totalPages,
+            cart : cart,
             style: "css/products.css"
         });
     } catch (error) {

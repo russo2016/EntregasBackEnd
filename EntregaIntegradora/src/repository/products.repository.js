@@ -17,7 +17,7 @@ export default class Product{
     }
 
     async saveProducts(product){
-        const newProduct = new this.dao.create(product);
+        const newProduct = await this.dao.create(product);
         return newProduct;
     }
 

@@ -17,8 +17,12 @@ export default class Carts {
     return newCart;
   };
 
-  modify = async (id, cart) => {
+  add = async (id, cart) => {
     return await cartModel.findByIdAndUpdate(id, cart, { new: true });
+  };
+
+  modify = async (id, cart) => {
+    return await cartModel.findOneAndUpdate(id, cart, { new: true });
   };
 
   delete = async (id) => {

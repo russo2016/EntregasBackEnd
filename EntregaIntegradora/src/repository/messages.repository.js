@@ -12,17 +12,17 @@ export default class Message {
     }
 
     async saveMessage(message) {
-        const newMessage = new this.dao.create(message);
+        const newMessage = await this.dao.create(message);
         return newMessage;
     }
 
     async updateMessage(id, message) {
-        const result = await this.dao.updateOne({ _id: id }, message);
+        const result = await this.dao.modify({ _id: id }, message);
         return result;
     }
 
     async deleteMessage(id) {
-        const result = await this.dao.deleteOne({ _id: id });
+        const result = await this.dao.delete({ _id: id });
         return result;
     }
 }

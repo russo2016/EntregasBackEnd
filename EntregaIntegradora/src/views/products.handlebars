@@ -35,10 +35,12 @@
                             <h3 class="producto-titulo">{{this.title}}</h3>
                             <p>{{this.description}}</p>
                             <p class="producto-precio">${{this.price}}</p>
+                            <p id="productID" class="invisible" >{{this._id}}</p>
                             <button id="addProductToCart" class="producto-agregar">Agregar al carrito</button>
                         </div>                     
                     </div>
                 {{/each}}
+                <p class="invisible" id="cartID">{{this.cart}}</p>
             </div>
                     <div class="pagination-buttons">
             {{#if hasPrevPage}}

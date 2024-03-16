@@ -95,11 +95,11 @@ updateProduct.addEventListener("click", (e) => {
         })
         .then((response) => response.json())
         .then((data) => {
-            if (data.success) {
+            if (data) {
                 alert("Producto actualizado");
             }
         })
     } catch (error) {
-    console.log(error);
+        console.log(error);
     }
 });
