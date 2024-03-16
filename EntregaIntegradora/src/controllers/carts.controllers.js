@@ -81,7 +81,6 @@ export const purchase = async (req, res) => {
     const ticket = new Ticket();
     try {
         const response = await ticket.createTicket(req, res);
-        console.log(response);
         if (response) {
             res.status(200).json(response);
         }

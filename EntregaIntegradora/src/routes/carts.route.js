@@ -9,6 +9,6 @@ router.post("/:cid/products/:pid",auth("user"), controller.addProductToCart);
 router.put("/:cid/product/:pid",auth("user"), controller.updateProductInCart);
 router.delete("/:id",auth("admin"), controller.deleteCartById);
 router.delete("/:cid/product/:pid",auth("user"), controller.removeProductFromCart);
-router.get("/:cid/purchase",auth("PUBLIC"), controller.purchase);
+
 
 export default router;

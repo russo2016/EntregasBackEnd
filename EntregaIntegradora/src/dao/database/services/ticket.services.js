@@ -3,8 +3,9 @@ import {ProductsModel} from "../models/products.model.js";
 import CartsModel from "../models/carts.model.js";
 
 export default class Ticket {
-    constructor() {}
-
+    constructor() {
+        console.log("Ticket service");
+    }
     async createTicket(req, res) {
         try {
             const user = req.session.user;
@@ -19,6 +20,7 @@ export default class Ticket {
             if (!cart) {
                 throw new Error("El carrito no existe o no fue encontrado");
             }
+            const products = cart.product;
             for (const cartProduct of products) {
                 const product = await ProductsModel.findById(cartProduct.product);
                 if (!product) {
@@ -30,11 +32,16 @@ export default class Ticket {
                 product.stock -= cartProduct.quantity;
                 await product.save();
             }
+            let totalPrice = 0;
+            const result = await CartsModel.findById(cartId).populate("product.product").lean();
+            result.product.forEach(item => {
+                totalPrice += item.product.price * item.quantity;
+            });
             const newTicket = await TicketsModel.create({
                 purchaser: user.email,
                 code: Math.random().toString(36).substr(2, 9),
                 purchase_datetime: new Date(),
-                amount: cart.total
+                amount: totalPrice
             });
             return newTicket;
         } catch (err) {
