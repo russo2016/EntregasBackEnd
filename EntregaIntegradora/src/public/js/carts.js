@@ -36,7 +36,7 @@ deleteBtn.addEventListener('click', async (e) => {
             if (!response.ok) {
                 throw new Error('No se pudo eliminar el carrito');
             }
-            window.location.href = `/carts/${cart}`;
+            window.location.reload();
         } else {
             console.error('No se recibió información de usuario válida');
         }
