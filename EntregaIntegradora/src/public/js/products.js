@@ -44,7 +44,7 @@ addProductButtons.forEach((button) => {
                     .then(response => response.json())
                     .then(data => {
                         if (data.message === "success") {
-                            alert('Producto agregado al carrito');
+                            window.location.reload();
                         } else {
                             console.error(data.message);
                         }

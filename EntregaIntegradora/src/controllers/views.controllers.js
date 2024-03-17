@@ -7,6 +7,11 @@ import  CartsModel  from "../dao/database/models/carts.model.js";
 export const getProducts = async (req, res) => {
     const product = ProductService;
     try {
+        let cart = await cartService.getById(req.session.user.cart);
+        let cartItemCount = 0;
+        if (cart) {
+            cartItemCount = cart.product.length;
+        }
         const { limit, page, query, sort } = req.query;
         const parsedQuery = () => {
             if (query) {
@@ -34,11 +39,14 @@ export const getProducts = async (req, res) => {
                 lean: true
             }
         );
+    
         const { docs, hasNextPage, hasPrevPage, nextPage, prevPage, totalPages } = productsData;
         const products = docs;
+
         res.status(200).render("products", {
             title: "Listado de productos",
             products : products,
+            cartItemCount: cartItemCount,
             hasNextPage,
             hasPrevPage,
             nextPage,

@@ -28,6 +28,16 @@ const ticketSchema = new mongoose.Schema({
             type: Number,
             required: true,
         }
+    }],
+    noStockProducts: [{
+        product: {
+            type: String,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        }
     }]
 })
 
