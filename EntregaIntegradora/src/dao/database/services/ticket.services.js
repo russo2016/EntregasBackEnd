@@ -36,14 +36,17 @@ export default class Ticket {
                 }
                 let totalPrice = 0;
                 const result = await CartsModel.findById(cartId).populate("product.product").lean();
+                const productsPurchased = []
                 result.product.forEach(item => {
                     totalPrice += item.product.price * item.quantity;
+                    productsPurchased.push({ product: item.product.title, quantity: item.quantity });
                 });
                 const newTicket = await TicketsModel.create({
                     purchaser: user.email,
                     code: Math.random().toString(36).substr(2, 9),
                     purchase_datetime: new Date(),
-                    amount: totalPrice
+                    amount: totalPrice,
+                    products: productsPurchased,
                 });
                 return newTicket;
             }

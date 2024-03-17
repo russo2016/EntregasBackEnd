@@ -19,6 +19,16 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    products: [{
+        product: {
+            type: String,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        }
+    }]
 })
 
 export const TicketsModel = mongoose.model(ticketsCollection, ticketSchema);

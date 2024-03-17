@@ -15,9 +15,8 @@ export default class UsersService {
     }
 
     async saveUser(user){
-        const newUser = new this.dao(user);
-        const response = await newUser.create();
-        return response;
+        const newUser = await this.dao.create(user);
+        return newUser;
     }
 
     async updateUser(id, user){
