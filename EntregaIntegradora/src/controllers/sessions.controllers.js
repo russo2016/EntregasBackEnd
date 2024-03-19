@@ -1,4 +1,5 @@
 import passport from "passport";
+import UsersDTO from "../dao/DTO/usersDTO.js";
 
 export const getSignupPage = async (req, res) => {
     try {
@@ -72,21 +73,30 @@ export const logout = async (req, res) => {
     }
 };
 
+
 export const getCurrentSession = async (req, res) => {
     if (!req.isAuthenticated()) {
         res.status(401).json({ message: "No hay una sesión activa" });
     } else {
-        const user = {name: req.user.first_name,
-            last_name: req.user.last_name,
-            email: req.user.email,
-            age: req.user.age,
-            role: req.user.role,
-            cart: req.user.cart
-        }
+        // Crear una instancia de UsersDTO con req.user
+        const userDTO = new UsersDTO(req.user);
+
+        // Utilizar la instancia de UsersDTO para construir el objeto de usuario
+        const user = {
+            fullName: userDTO.fullName,
+            email: userDTO.email,
+            age: userDTO.age,
+            role: userDTO.role,
+            cart: userDTO.cart
+        };
+
+        // Construir el objeto de sesión
         const session = {
             message: "Sesión activa",
             user: user
         };
+
+        // Devolver la sesión como respuesta
         res.status(200).json(session);
     }
 };

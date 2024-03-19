@@ -1,5 +1,8 @@
 import {cartService} from "../repository/index.js";
 import Ticket from "../dao/database/services/ticket.services.js";
+import EErrors from "../errorTools/enum.js";
+import {generateCartErrorInfo} from "../errorTools/info.js";
+import CustomError from "../errorTools/customError.js";
 
 const cart = cartService;
 
@@ -35,11 +38,20 @@ export const createCart = async (req, res) => {
 export const addProductToCart = async (req, res) => {
     const { cid, pid } = req.params;
     try {
+        const productExists = await Product.findById(pid);
+        if (productExists) {
         const response = await cart.addProductToCart(cid, pid);
         res.status(200).json({ message: "success", data: response });
+        } else {
+        res.status(404).json({ message: "Producto no encontrado", data: null });
+        }
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "error", data: error });
+        res.status(500).json({ message: CustomError.createError({
+            name: "Error agregando el producto al carrito",
+            cause: generateCartErrorInfo(cid),
+            message: "Error agregando el producto al carrito",
+            code: EErrors.DATABASE_ERROR
+        }), data: error });
     }
 };
 

@@ -1,4 +1,7 @@
 import {ProductService} from "../repository/index.js";
+import CustomError from "../errorTools/customError.js";
+import EErrors from "../errorTools/enum.js";
+import {generateProductErrorInfo} from "../errorTools/info.js";
 
 const productService = ProductService;
 
@@ -50,7 +53,12 @@ export const createProduct = async (req, res) => {
         res.status(200).json(response);
     } catch (error) {
         console.log(error.message)
-        res.status(500).json(error);
+        res.status(500).json(CustomError.createError({
+            name: "Error creando el producto",
+            cause: generateProductErrorInfo(req.body),
+            message: "Error creando el producto",
+            code: EErrors.INVALID_TYPES_ERROR
+        }));
     }
 };
 

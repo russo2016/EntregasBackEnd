@@ -15,6 +15,10 @@ import sessionRouter from './routes/session.route.js';
 import passport from 'passport';
 import initializeGitHubPassport from './config/githubPassport.config.js';
 import initializePassport from "./config/passport.config.js";
+import mockingRouter from './routes/mocking.route.js';
+import CustomError from './errorTools/customError.js';
+import EErrors from "./errorTools/enum.js";
+import {generateNotFoundRouteErrorInfo} from './errorTools/info.js';
 
 dotenv.config();
 
@@ -68,7 +72,14 @@ app.use("/", sessionRouter);
 app.use("/api/products",productsRouter);
 app.use("/api/messages",messagesRouter);
 app.use("/api/carts",cartsRouter);
+app.use("/carts",cartsRouter);
+app.use("/",mockingRouter)
 
 app.get("*", (req, res) => {
-    res.status(404).send({error: "Not found"});
+    CustomError.createError({
+        name: "Que estas buscando?",
+        cause: generateNotFoundRouteErrorInfo(),
+        message: "La ruta no existe",
+        code: EErrors.ROUTING_ERROR
+    });
 });
