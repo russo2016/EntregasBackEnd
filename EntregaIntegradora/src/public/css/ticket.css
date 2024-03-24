@@ -1,0 +1,54 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff; /* Color de fondo opcional */
+}
+
+.ticket {
+    background-color: #F4CBE3;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%; /* Ancho del ticket */
+    max-width: 600px; /* Ancho máximo del ticket */
+}
+
+.ticket-title {
+    color: white;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.ticket-info {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.ticket-subtitle {
+    color: white;
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.products-list {
+    margin-bottom: 20px;
+}
+
+.product-item {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.no-stock-products-list {
+    margin-bottom: 20px;
+}
+
+.no-stock-item {
+    font-size: 16px;
+    margin-bottom: 5px;
+    color: red; /* Cambiar color a rojo para productos sin stock */
+}

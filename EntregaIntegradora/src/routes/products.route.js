@@ -7,7 +7,7 @@ const router = Router();
 router.get("/",auth("PUBLIC"), productsController.getAllProducts);
 router.get("/:id",auth("PUBLIC"), productsController.getProductById);
 router.post("/",auth("PUBLIC"), productsController.createProduct);
-router.put("/:id",auth("admin"), productsController.updateProduct);
-router.delete("/:id",auth("admin"), productsController.deleteProduct);
+router.put("/:id",auth("PUBLIC"), productsController.updateProduct);
+router.delete("/:id",auth("PUBLIC"), productsController.deleteProduct);
 
 export default router;

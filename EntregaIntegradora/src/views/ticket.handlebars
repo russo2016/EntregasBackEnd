@@ -1,0 +1,21 @@
+<div class="ticket">
+        <h1 class="ticket-title">{{ title }}</h1>
+        <p class="ticket-info"><strong>Código:</strong> {{ ticket.code }}</p>
+        <p class="ticket-info"><strong>Fecha de compra:</strong> {{ ticket.purchase_datetime }}</p>
+        <p class="ticket-info"><strong>Comprador:</strong> {{ ticket.purchaser }}</p>
+        <p class="ticket-info"><strong>Total:</strong> {{ ticket.amount }}</p>
+        <h2 class="ticket-subtitle">Productos:</h2>
+        <ul class="products-list">
+            {{#each ticket.products}}
+                <li class="product-item">{{ this.quantity }}x {{ this.product }}</li>
+            {{/each}}
+        </ul>
+        {{#if ticket.noStockProducts}}
+            <h2 class="ticket-subtitle">Productos sin stock:</h2>
+            <ul class="no-stock-products-list">
+                {{#each ticket.noStockProducts}}
+                    <li class="no-stock-item">{{ this.quantity }}x {{ this.product }}</li>
+                {{/each}}
+            </ul>
+        {{/if}}
+    </div>

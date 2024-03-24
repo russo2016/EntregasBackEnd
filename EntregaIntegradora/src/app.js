@@ -19,6 +19,7 @@ import mockingRouter from './routes/mocking.route.js';
 import CustomError from './errorTools/customError.js';
 import EErrors from "./errorTools/enum.js";
 import {generateNotFoundRouteErrorInfo} from './errorTools/info.js';
+import getLogger from './utils/logger.js';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ const app = express();
 const PORT = process.env.PORT || 8080;
 const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/ecommerce";
 const CODERSECRET = process.env.CODERSECRET;
+const logger = getLogger();
 import MongoSingleton from './mongoSingleton.js';
 
 const server = app.listen(PORT, () => {
@@ -74,6 +76,16 @@ app.use("/api/messages",messagesRouter);
 app.use("/api/carts",cartsRouter);
 app.use("/carts",cartsRouter);
 app.use("/",mockingRouter)
+
+app.get('/loggerTest', (req, res) => {
+    logger.debug('Debug message');
+    logger.http('HTTP message');
+    logger.info('Info message');
+    logger.warning('Warning message');
+    logger.error('Error message');
+    logger.fatal('Fatal message');
+    res.send('Logging test completed');
+});
 
 app.get("*", (req, res) => {
     CustomError.createError({

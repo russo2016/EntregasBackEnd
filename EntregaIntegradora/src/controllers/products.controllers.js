@@ -42,7 +42,12 @@ export const getProductById = async (req, res) => {
         const response = await productService.getById(id);
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(CustomError.createError({
+            name: "Error obteniendo el producto",
+            cause: generateProductErrorInfo(req.body),
+            message: "Error obteniendo el producto",
+            code: EErrors.INVALID_TYPES_ERROR
+        }));
     }
 };
 
@@ -52,7 +57,6 @@ export const createProduct = async (req, res) => {
         const response = await productService.saveProducts({ title, description, price, thumbnail, code, stock });
         res.status(200).json(response);
     } catch (error) {
-        console.log(error.message)
         res.status(500).json(CustomError.createError({
             name: "Error creando el producto",
             cause: generateProductErrorInfo(req.body),
@@ -69,7 +73,12 @@ export const updateProduct = async (req, res) => {
         const response = await productService.updateProduct(id, { title, description, price, thumbnail, code, stock });
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(CustomError.createError({
+            name: "Error editando el producto",
+            cause: generateProductErrorInfo(req.body),
+            message: "Error editando el producto",
+            code: EErrors.INVALID_TYPES_ERROR
+        }));
     }
 };
 
@@ -79,6 +88,11 @@ export const deleteProduct = async (req, res) => {
         const response = await productService.deleteProduct(id);
         res.status(200).json(response);
     } catch (error) {
-        res.status(500).json(error);
+        res.status(500).json(CustomError.createError({
+            name: "Error eliminando el producto",
+            cause: generateProductErrorInfo(req.body),
+            message: "Error eliminando el producto",
+            code: EErrors.INVALID_TYPES_ERROR
+        }));
     }
 };

@@ -3,8 +3,10 @@ import Ticket from "../dao/database/services/ticket.services.js";
 import EErrors from "../errorTools/enum.js";
 import {generateCartErrorInfo} from "../errorTools/info.js";
 import CustomError from "../errorTools/customError.js";
+import { ProductService } from "../repository/index.js";
 
 const cart = cartService;
+const Product = ProductService;
 
 export const getAllCarts = async (req, res) => {
     try {
@@ -38,7 +40,7 @@ export const createCart = async (req, res) => {
 export const addProductToCart = async (req, res) => {
     const { cid, pid } = req.params;
     try {
-        const productExists = await Product.findById(pid);
+        const productExists = await Product.getById(pid);
         if (productExists) {
         const response = await cart.addProductToCart(cid, pid);
         res.status(200).json({ message: "success", data: response });
@@ -46,6 +48,7 @@ export const addProductToCart = async (req, res) => {
         res.status(404).json({ message: "Producto no encontrado", data: null });
         }
     } catch (error) {
+        console.log(pid)
         res.status(500).json({ message: CustomError.createError({
             name: "Error agregando el producto al carrito",
             cause: generateCartErrorInfo(cid),
@@ -93,7 +96,11 @@ export const purchase = async (req, res) => {
     try {
         const response = await ticket.createTicket(req, res);
         if (response) {
-            res.status(200).json(response);
+            res.status(200).render("ticket",{
+                title : "Ticket",
+                ticket : response,
+                style : "../../css/ticket.css"
+            })
         }
     } catch (error) {
         res.status(500).json(error.message);
