@@ -1,31 +1,58 @@
+import getLogger from "../utils/logger.js";
 
+const logger = getLogger();
 export default class UsersService {
     constructor(dao) {
         this.dao = dao;
     }
 
     async getUsers(){
-        getUsers = await this.dao.get();
-        return getUsers;
+        try {
+            const users = await this.dao.get();
+            return users;
+        } catch (error) {
+            logger.error('Error al obtener todos los usuarios:', error);
+            throw error;
+        }
     }
 
     async getUser(email){
-        const user = await this.dao.findOne(email);
-        return user;
+        try {
+            const user = await this.dao.findOne(email);
+            return user;
+        } catch (error) {
+            logger.error(`Error al obtener el usuario con el email ${email}:`, error);
+            throw error;
+        }
     }
 
     async saveUser(user){
-        const newUser = await this.dao.create(user);
-        return newUser;
+        try {
+            const newUser = await this.dao.create(user);
+            return newUser;
+        } catch (error) {
+            logger.error('Error al guardar el usuario:', error);
+            throw error;
+        }
     }
 
     async updateUser(id, user){
-        const response = await this.dao.modify(id, user);
-        return response;
+        try {
+            const response = await this.dao.modify(id, user);
+            return response;
+        } catch (error) {
+            logger.error(`Error al actualizar el usuario con el ID ${id}:`, error);
+            throw error;
+        }
     }
 
     async deleteUser(id){
-        const response = await this.dao.delete(id);
-        return response;
+        try {
+            const response = await this.dao.delete(id);
+            return response;
+        } catch (error) {
+            logger.error(`Error al eliminar el usuario con el ID ${id}:`, error);
+            throw error;
+        }
     }
 }

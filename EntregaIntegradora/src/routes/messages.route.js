@@ -6,7 +6,7 @@ const router = Router();
 
 router.get("/",auth("PUBLIC"), controller.getAllMessages);
 router.post("/",auth("user"), controller.createMessage);
-router.put("/:id",auth("admin"), controller.updateMessage);
-router.delete("/:id",auth("admin"), controller.deleteMessage);
+router.put("/:id",auth("PUBLIC"), controller.updateMessage);
+router.delete("/:id",auth("PUBLIC"), controller.deleteMessage);
 
 export default router;

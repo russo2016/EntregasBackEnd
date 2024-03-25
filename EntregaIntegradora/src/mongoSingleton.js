@@ -1,9 +1,11 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import getLogger from './utils/logger.js';
 
 dotenv.config();
 
 const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/ecommerce";
+const logger = getLogger();
 
 export default class MongoSingleton {
   static #instance;
@@ -11,12 +13,13 @@ export default class MongoSingleton {
   constructor() {
     mongoose.connect(DB_URL);
   }
+
   static getInstance() {
     if (this.#instance) {
-      console.log("La base de datos ya esta conectada");
+      logger.info("La base de datos ya está conectada");
       return this.#instance;
     }
-    console.log("Base de datos conectada");
+    logger.info("Base de datos conectada");
     this.#instance = new MongoSingleton();
     return this.#instance;
   }

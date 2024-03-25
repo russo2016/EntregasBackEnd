@@ -3,6 +3,9 @@ import {MessageService} from "../repository/index.js";
 import {cartService} from "../repository/index.js";
 import { ProductsModel } from "../dao/database/models/products.model.js";
 import  CartsModel  from "../dao/database/models/carts.model.js";
+import getLogger from "../utils/logger.js";
+
+const logger = getLogger();
 
 export const getProducts = async (req, res) => {
     const product = ProductService;
@@ -55,7 +58,7 @@ export const getProducts = async (req, res) => {
             style: "css/products.css"
         });
     } catch (error) {
-        res.status(500).json(error);
+        logger.error(error);
     }
 };
 
@@ -70,7 +73,7 @@ export const getMessages = async (req, res) => {
             style: "css/messages.css"
         });
     } catch (error) {
-        res.status(500).json(error);
+        logger.error(error);
     }
 };
 
@@ -90,7 +93,7 @@ export const getCartById = async (req, res) => {
             style: "../css/carts.css"
         });
     } catch (error) {
-        res.status(500).json(error);
+        logger.error(error);
     }
 };
 

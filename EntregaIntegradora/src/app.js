@@ -37,7 +37,7 @@ const server = app.listen(PORT, () => {
 const io = new Server(server);
 
 io.on("connection", (socket) => {
-	console.log("Se conecto un nuevo ususario");
+	logger.info("Se conectó un nuevo usuario");
 });
 
 const DB_connection = MongoSingleton.getInstance();
@@ -57,9 +57,6 @@ app.use(session({
     store: MongoStore.create({
          mongoUrl: DB_URL,
          ttl: 15 * 60 * 1000,
-         mongoOptions: {
-             useNewUrlParser: true
-        }
         }),
     secret: CODERSECRET,
     resave: false,
@@ -88,10 +85,6 @@ app.get('/loggerTest', (req, res) => {
 });
 
 app.get("*", (req, res) => {
-    CustomError.createError({
-        name: "Que estas buscando?",
-        cause: generateNotFoundRouteErrorInfo(),
-        message: "La ruta no existe",
-        code: EErrors.ROUTING_ERROR
-    });
+    const error = new CustomError(EErrors.NOT_FOUND, generateNotFoundRouteErrorInfo(req.originalUrl));
+    res.status(404).send(error);
 });

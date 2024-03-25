@@ -1,6 +1,9 @@
 import {TicketsModel} from "../models/ticket.model.js";
 import {ProductsModel} from "../models/products.model.js";
 import CartsModel from "../models/carts.model.js";
+import getLogger from "../../../utils/logger.js";
+
+const logger = getLogger();
 
 export default class Ticket {
     constructor() {
@@ -30,7 +33,7 @@ export default class Ticket {
                         }
                         if (product.stock < cartProduct.quantity) {
                             noStockProducts.push({ product: product.title, quantity: cartProduct.quantity });
-                            console.log("El producto "+ product.title +" no tiene suficiente stock");
+                            logger.warning("El producto "+ product.title +" no tiene suficiente stock");
                             await cart.updateOne({ $pull: { product: { product: product._id } } });
                         }
                         if (product.stock > 0){
@@ -65,7 +68,7 @@ export default class Ticket {
                     res.status(400).json({ error: "El carrito esta vacío" });        
                 }
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             throw err;
         }
     }
@@ -78,7 +81,7 @@ export default class Ticket {
             }
             return ticket;
         } catch (err) {
-            console.error(err);
+            logger.error(err);
             throw err;
         }
     }
