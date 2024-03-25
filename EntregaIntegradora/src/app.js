@@ -85,6 +85,11 @@ app.get('/loggerTest', (req, res) => {
 });
 
 app.get("*", (req, res) => {
-    const error = new CustomError(EErrors.NOT_FOUND, generateNotFoundRouteErrorInfo(req.originalUrl));
-    res.status(404).send(error);
+    logger.error("Ruta no encontrada");
+    CustomError.createError({
+        name: "Que estas buscando?",
+        cause: generateNotFoundRouteErrorInfo(),
+        message: "La ruta no existe",
+        code: EErrors.ROUTING_ERROR
+    });
 });
