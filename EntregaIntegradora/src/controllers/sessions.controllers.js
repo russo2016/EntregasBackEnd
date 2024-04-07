@@ -1,8 +1,20 @@
 import passport from "passport";
 import UsersDTO from "../dao/DTO/usersDTO.js";
 import getLogger from "../utils/logger.js";
+import nodemailer from "nodemailer";
+import UsersService from "../repository/users.repository.js";
+import dotenv from "dotenv";
 
 const logger = getLogger();
+dotenv.config();
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.APP_PASSWORD,
+    },
+});
 
 export const getSignupPage = async (req, res) => {
     try {
@@ -110,3 +122,31 @@ export const getCurrentSession = async (req, res) => {
         res.status(200).json(session);
     }
 };
+
+export const forgotPassword = async (req, res, next) => {
+    try {
+        const email = req.sessions.email;
+        let result = await transporter.sendMail({
+            from: `${process.env.EMAIL}`,
+            to: `${email}`,
+            subject: "Forgot your password",
+            text: "Este mail es para recuperar tu contraseña",
+            html: `<a href="http://localhost:3000/forgotPassword/${email}">Click aquí para recuperar tu contraseña</a>`
+          });
+          res.json({ status: "success", result });
+        } catch (error) {
+            res.json({ status: "error", error });
+            }
+}
+
+export const getForgotPasswordPage = async (req, res) => {
+    try {
+        res.render("forgotPass", {
+            title: "Restaurar contraseña",
+            style: "css/forgotPassword.css"
+        });
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json(error);
+    }
+}

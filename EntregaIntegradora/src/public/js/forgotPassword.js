@@ -1,0 +1,21 @@
+const form = document.getElementById("forgotPasswordForm");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("email").value;
+    const response = await fetch("/forgotPassword", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+    });
+    const data = await response.json();
+    if (data) {
+        console.log("Ok", data)
+        alert(data);
+    } else {
+        console.log("Error", data)
+        alert(data);
+    }
+});
