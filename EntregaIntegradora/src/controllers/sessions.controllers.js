@@ -125,7 +125,7 @@ export const getCurrentSession = async (req, res) => {
 
 export const forgotPassword = async (req, res, next) => {
     try {
-        const email = req.sessions.email;
+        const email = req.body.email;
         let result = await transporter.sendMail({
             from: `${process.env.EMAIL}`,
             to: `${email}`,
@@ -145,6 +145,40 @@ export const getForgotPasswordPage = async (req, res) => {
             title: "Restaurar contraseña",
             style: "css/forgotPassword.css"
         });
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json(error);
+    }
+}
+
+export const getNewPasswordPage = async (req, res) => {
+    try {
+        res.render("newPassword", {
+            title: "Nueva contraseña",
+            style: "css/newPassword.css"
+        });
+    } catch (error) {
+        logger.error(error);
+        res.status(500).json(error);
+    }
+}
+
+export const updateNewPassword = async (req, res) => {
+    try {
+        const { email } = req.params;
+        const { password } = req.body;
+        const user = await UsersService.getUser(email);
+        if (!user) {
+            logger.error("Usuario no encontrado");
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+        if (user.password === password) {
+            logger.error("La contraseña no puede ser igual a la anterior");
+            return res.status(400).json({ message: "La contraseña no puede ser igual a la anterior" });
+        }else{
+            const response = await UsersService.updatePassword(email, password);
+            res.status(200).json(response);
+        }
     } catch (error) {
         logger.error(error);
         res.status(500).json(error);

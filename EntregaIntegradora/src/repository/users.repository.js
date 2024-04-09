@@ -36,6 +36,16 @@ export default class UsersService {
         }
     }
 
+    async updatePassword(id, password){
+        try {
+            const response = await this.dao.updatePassword(id, password);
+            return response;
+        } catch (error) {
+            logger.error(`Error al actualizar la contraseña del usuario con el ID ${id}:`, error);
+            throw error;
+        }
+    }
+
     async updateUser(id, user){
         try {
             const response = await this.dao.modify(id, user);
