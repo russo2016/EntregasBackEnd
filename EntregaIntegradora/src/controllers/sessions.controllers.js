@@ -2,8 +2,10 @@ import passport from "passport";
 import UsersDTO from "../dao/DTO/usersDTO.js";
 import getLogger from "../utils/logger.js";
 import nodemailer from "nodemailer";
-import UsersService from "../repository/users.repository.js";
+import {userService} from "../repository/index.js";
 import dotenv from "dotenv";
+import {hashSync, genSaltSync, compareSync} from "bcrypt";
+import { createHash, isValidPassword } from "../utils.js";
 
 const logger = getLogger();
 dotenv.config();
@@ -131,7 +133,7 @@ export const forgotPassword = async (req, res, next) => {
             to: `${email}`,
             subject: "Forgot your password",
             text: "Este mail es para recuperar tu contraseña",
-            html: `<a href="http://localhost:3000/forgotPassword/${email}">Click aquí para recuperar tu contraseña</a>`
+            html: `<a href="http://localhost:8080/forgotPassword/${email}">Click aquí para recuperar tu contraseña</a>`
           });
           res.json({ status: "success", result });
         } catch (error) {
@@ -167,19 +169,20 @@ export const updateNewPassword = async (req, res) => {
     try {
         const { email } = req.params;
         const { password } = req.body;
-        const user = await UsersService.getUser(email);
+        const user = await userService.getUser(email);
         if (!user) {
             logger.error("Usuario no encontrado");
-            return res.status(404).json({ message: "Usuario no encontrado" });
+            return res.status(404).json({ message: "Usuario no encontrado", success: false});
         }
-        if (user.password === password) {
+        if (isValidPassword(user,password)) {
             logger.error("La contraseña no puede ser igual a la anterior");
-            return res.status(400).json({ message: "La contraseña no puede ser igual a la anterior" });
+            return res.status(400).json({ message: "La contraseña no puede ser igual a la anterior", success: false});
         }else{
-            const response = await UsersService.updatePassword(email, password);
-            res.status(200).json(response);
+            const response = await userService.updatePassword(user._id, hashSync(password,genSaltSync(10)));
+            res.status(200).json({response: response, success: true, message: "Contraseña actualizada con éxito"});
         }
     } catch (error) {
+        console.log(error);
         logger.error(error);
         res.status(500).json(error);
     }

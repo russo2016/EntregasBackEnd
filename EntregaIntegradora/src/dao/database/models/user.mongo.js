@@ -17,6 +17,10 @@ export default class Users {
     return newUser;
   };
 
+  updatePassword = async (id, password) => {
+    return await userModel.findByIdAndUpdate(id, { password: password }, { new: true });
+  }
+
   modify = async (id, user) => {
     return await userModel.findByIdAndUpdate(id, user, { new: true });
   };

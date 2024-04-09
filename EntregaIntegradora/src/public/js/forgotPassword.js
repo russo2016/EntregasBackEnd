@@ -1,7 +1,7 @@
 const form = document.getElementById("forgotPasswordForm");
 
 form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Evitar el envío predeterminado del formulario
+    e.preventDefault();
     const email = document.getElementById("email").value;
     const response = await fetch("/forgotPassword", {
         method: "POST",

@@ -21,6 +21,7 @@ export default class UsersService {
             const user = await this.dao.findOne(email);
             return user;
         } catch (error) {
+            console.log(error)
             logger.error(`Error al obtener el usuario con el email ${email}:`, error);
             throw error;
         }

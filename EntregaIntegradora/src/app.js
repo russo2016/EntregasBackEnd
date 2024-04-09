@@ -16,9 +16,6 @@ import passport from 'passport';
 import initializeGitHubPassport from './config/githubPassport.config.js';
 import initializePassport from "./config/passport.config.js";
 import mockingRouter from './routes/mocking.route.js';
-import CustomError from './errorTools/customError.js';
-import EErrors from "./errorTools/enum.js";
-import {generateNotFoundRouteErrorInfo} from './errorTools/info.js';
 import getLogger from './utils/logger.js';
 
 dotenv.config();
@@ -85,12 +82,12 @@ app.get('/loggerTest', (req, res) => {
     res.send('Logging test completed');
 });
 
-app.get("*", (req, res) => {
-    logger.error("Ruta no encontrada");
-    CustomError.createError({
-        name: "Que estas buscando?",
-        cause: generateNotFoundRouteErrorInfo(),
-        message: "La ruta no existe",
-        code: EErrors.ROUTING_ERROR
-    });
-});
+// app.get("*", (req, res) => {
+//     logger.error("Ruta no encontrada");
+//     CustomError.createError({
+//         name: "Que estas buscando?",
+//         cause: generateNotFoundRouteErrorInfo(),
+//         message: "La ruta no existe",
+//         code: EErrors.ROUTING_ERROR
+//     });
+// });

@@ -20,6 +20,11 @@ export default class UsersService {
         return response;
     }
 
+    async updatePassword(id, password){
+        const response = await this.dao.updatePassword(id, password);
+        return response;
+    }
+
     async updateUser(id, user){
         const response = await this.dao.modify(id, user);
         return response;
