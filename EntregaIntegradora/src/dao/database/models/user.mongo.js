@@ -11,6 +11,10 @@ export default class Users {
     return await userModel.findOne({ email: parameter });
   };
 
+  findById = async (id) => {
+    return await userModel.findById(id);
+  }
+
   create = async (user) => {
     const newUser = new userModel(user);
     await newUser.save();
@@ -19,6 +23,10 @@ export default class Users {
 
   updatePassword = async (id, password) => {
     return await userModel.findByIdAndUpdate(id, { password: password }, { new: true });
+  }
+
+  updateRole = async (id, role) => {
+    return await userModel.findByIdAndUpdate(id, { role: role }, { new: true });
   }
 
   modify = async (id, user) => {

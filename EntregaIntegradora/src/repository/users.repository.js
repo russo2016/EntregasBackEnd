@@ -27,6 +27,17 @@ export default class UsersService {
         }
     }
 
+    async getUserById(id){
+        try {
+            const user = await this.dao.findById(id);
+            return user;
+        } catch (error) {
+            console.log(error)
+            logger.error(`Error al obtener el usuario con el ID ${id}:`, error);
+            throw error;
+        }
+    }
+
     async saveUser(user){
         try {
             const newUser = await this.dao.create(user);
@@ -43,6 +54,16 @@ export default class UsersService {
             return response;
         } catch (error) {
             logger.error(`Error al actualizar la contraseña del usuario con el ID ${id}:`, error);
+            throw error;
+        }
+    }
+
+    async updateRole(id, role){
+        try {
+            const response = await this.dao.updateRole(id, role);
+            return response;
+        } catch (error) {
+            logger.error(`Error al actualizar el rol del usuario con el ID ${id}:`, error);
             throw error;
         }
     }

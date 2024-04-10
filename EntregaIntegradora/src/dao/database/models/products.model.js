@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import paginate from "mongoose-paginate-v2";
 
+
 const productsCollection = "products";
 
 const productSchema = new mongoose.Schema({
@@ -26,7 +27,12 @@ const productSchema = new mongoose.Schema({
     stock: {
         type: Number,
         required: true,
-    }
+    },
+    owner: {
+        type: String,
+        default: "admin",
+        required: true,
+    },
 });
 
 productSchema.plugin(paginate);

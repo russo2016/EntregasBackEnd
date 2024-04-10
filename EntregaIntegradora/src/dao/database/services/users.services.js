@@ -14,6 +14,11 @@ export default class UsersService {
         return user;
     }
 
+    async getUserById(id){
+        const user = await this.dao.findById(id);
+        return user;
+    }
+
     async saveUser(user){
         const newUser = new this.dao(user);
         const response = await newUser.create();
@@ -22,6 +27,11 @@ export default class UsersService {
 
     async updatePassword(id, password){
         const response = await this.dao.updatePassword(id, password);
+        return response;
+    }
+
+    async updateRole(id, role){
+        const response = await this.dao.updateRole(id, role);
         return response;
     }
 

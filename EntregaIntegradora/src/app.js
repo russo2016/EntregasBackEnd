@@ -17,6 +17,7 @@ import initializeGitHubPassport from './config/githubPassport.config.js';
 import initializePassport from "./config/passport.config.js";
 import mockingRouter from './routes/mocking.route.js';
 import getLogger from './utils/logger.js';
+import usersRouter from './routes/user.route.js';
 
 dotenv.config();
 
@@ -71,6 +72,7 @@ app.use("/api/messages",messagesRouter);
 app.use("/api/carts",cartsRouter);
 app.use("/carts",cartsRouter);
 app.use("/",mockingRouter)
+app.use("/api/users",usersRouter)
 
 app.get('/loggerTest', (req, res) => {
     logger.debug('Debug message');

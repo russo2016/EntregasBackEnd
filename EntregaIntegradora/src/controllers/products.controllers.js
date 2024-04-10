@@ -60,7 +60,7 @@ export const getProductById = async (req, res) => {
 export const createProduct = async (req, res) => {
     const { title, description, price, thumbnail, code, stock } = req.body;
     try {
-        const response = await productService.saveProduct({ title, description, price, thumbnail, code, stock });
+        const response = await productService.saveProduct({ title, description, price, thumbnail, code, stock,owner: req.user.email});
         logger.debug("Producto creado con éxito")
         res.status(200).json(response);
     } catch (error) {
