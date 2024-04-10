@@ -1,10 +1,11 @@
 import { Router } from "express";
 import * as controller from "../controllers/user.controllers.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 
-router.get("/", controller.getAllUsers)
-router.get("/:id", controller.getUserById)
-router.post("/premium/:id", controller.changeRole)
+router.get("/",auth(["PUBLIC"]), controller.getAllUsers)
+router.get("/:id",auth(["PUBLIC"]), controller.getUserById)
+router.post("/premium/:id",auth(["premium","user"]), controller.changeRole)
 
 export default router;
