@@ -6,6 +6,6 @@ const router = Router();
 
 router.get("/",auth(["PUBLIC"]), controller.getAllUsers)
 router.get("/:id",auth(["PUBLIC"]), controller.getUserById)
-router.post("/premium/:id",auth(["premium","user"]), controller.changeRole)
+router.post("/premium/:id",auth(["PUBLIC"]), controller.changeRole)
 
 export default router;
