@@ -99,9 +99,22 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     const { id } = req.params;
     try {
-        const response = await productService.deleteProduct(id);
-        logger.debug("Producto eliminado con éxito")
-        res.status(200).json(response);
+        const product = await productService.getById(id);
+        if(req.session.user.role == "premium"){
+            if(req.session.user.email == product.owner){
+                const response = await productService.deleteProduct(id);
+                logger.debug("Producto eliminado por su creador")
+                res.status(200).json(response);
+            }
+            else{
+                logger.error("No tienes permisos para eliminar este producto");
+                res.status(401).json("No tienes permisos para eliminar este producto");
+            }
+        }else{
+            const response = await productService.deleteProduct(id);
+            logger.debug("Producto eliminado con éxito")
+            res.status(200).json(response);
+        }
     } catch (error) {
         logger.error(error);
         res.status(500).json(CustomError.createError({
