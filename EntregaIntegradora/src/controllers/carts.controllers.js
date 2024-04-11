@@ -50,9 +50,20 @@ export const addProductToCart = async (req, res) => {
     try {
         const productExists = await Product.getById(pid);
         if (productExists) {
-            const response = await cart.addProductToCart(cid, pid);
-            res.status(200).json({ message: "success", data: response });
-            logger.debug(`El producto con ID ${pid} se agregó al carrito con ID ${cid}`);
+            if (req.session.user.role === "premium") {
+                if(productExists.owner !== req.session.user.email){
+                    const response = await cart.addProductToCart(cid, pid);
+                    res.status(200).json({ message: "success", data: response });
+                    logger.debug(`El producto con ID ${pid} se agregó al carrito con ID ${cid}`);
+                }else{
+                    res.status(403).json({ message: "No puede agregar productos propios al carrito", data: null });
+                    logger.error(`El producto con ID ${pid} no se puede agregar al carrito con ID ${cid}`);
+                }
+            }else{
+                const response = await cart.addProductToCart(cid, pid);
+                res.status(200).json({ message: "success", data: response });
+                logger.debug(`El producto con ID ${pid} se agregó al carrito con ID ${cid}`);
+            }
         } else {
             res.status(404).json({ message: "Producto no encontrado", data: null });
             logger.error(`El producto con ID ${pid} no se encontró`);

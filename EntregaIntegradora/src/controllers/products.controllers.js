@@ -100,6 +100,7 @@ export const deleteProduct = async (req, res) => {
     const { id } = req.params;
     try {
         const product = await productService.getById(id);
+        
         if(req.session.user.role == "premium"){
             if(req.session.user.email == product.owner){
                 const response = await productService.deleteProduct(id);
