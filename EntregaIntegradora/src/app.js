@@ -18,6 +18,8 @@ import initializePassport from "./config/passport.config.js";
 import mockingRouter from './routes/mocking.route.js';
 import getLogger from './utils/logger.js';
 import usersRouter from './routes/user.route.js';
+import swaggerJsdoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express";
 
 dotenv.config();
 
@@ -41,6 +43,23 @@ io.on("connection", (socket) => {
 
 const DB_connection = MongoSingleton.getInstance();
 
+const swaggerOptions = {
+    definition: {
+      openapi: "3.0.1",
+      info: {
+        title: "Documentacion Ecommerce Russo",
+        version: "1.0.0",
+        description: "API creada para Ecommerce",
+        contact: {
+          name: "Russo",
+        },
+        servers: ["http://localhost:8080"],
+      },
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`],
+  };
+
+const specs = swaggerJsdoc(swaggerOptions);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(CODERSECRET));
@@ -73,6 +92,7 @@ app.use("/api/carts",cartsRouter);
 app.use("/carts",cartsRouter);
 app.use("/",mockingRouter)
 app.use("/api/users",usersRouter)
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 app.get('/loggerTest', (req, res) => {
     logger.debug('Debug message');
