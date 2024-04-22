@@ -49,18 +49,18 @@ paths:
       tags:
         - Carts
       parameters:
-        - name: pid
+        - name: "pid"
+          in: "path"
+          required: true
+          description: "ID del carrito a actualizar"
+          schema:
+            type: "string"
+        - name: "cid"
           in: path
           required: true
-          description: ID del carrito a actualizar
+          description: "ID del producto a actualizar"
           schema:
-            type: string
-        - name: cid
-          in: path
-          required: true
-          description: ID del producto a actualizar
-          schema:
-            type: string
+            type: "string"
       requestBody:
         required: true
         content:

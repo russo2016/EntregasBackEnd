@@ -54,7 +54,7 @@ export const signup = async (req, res) => {
                 return res.status(400).json({ error: info.message, success: false });
             }
             logger.info("Usuario creado con éxito");
-            return res.status(200).json({ message: "Usuario creado con éxito", success: true });
+            return res.status(200).json({user:user ,message: "Usuario creado con éxito", success: true });
         })(req, res);
     } catch (error) {
         logger.error(error);

@@ -108,6 +108,7 @@ export const deleteProduct = async (req, res) => {
                 res.status(200).json(response);
             }
             else{
+                console.log(req.session.user.role)
                 logger.error("No tienes permisos para eliminar este producto");
                 res.status(401).json("No tienes permisos para eliminar este producto");
             }
@@ -117,6 +118,7 @@ export const deleteProduct = async (req, res) => {
             res.status(200).json(response);
         }
     } catch (error) {
+        console.log(error)
         logger.error(error);
         res.status(500).json(CustomError.createError({
             name: "Error eliminando el producto",
