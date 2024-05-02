@@ -86,13 +86,14 @@ export const login = async (req, res, next) => {
 
 export const logout = async (req, res) => {
     try {
+        const user = req.user
+        user.last_connection = new Date();
+        user.save();
         req.session.destroy((err) => {
             if (err) {
                 logger.error(err);
                 res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
             } else {
-                const user = req.session.user
-                logger.info(`Sesión cerrada correctamente para el usuario ${user.email}`);
                 logger.info('Sesión cerrada correctamente');
                 res.json({ success: true, message: 'Sesión cerrada correctamente' });
             }
