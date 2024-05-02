@@ -73,6 +73,8 @@ const initializePassport = () => {
             req.message = "Usuario o contraseña incorrecta"
             return done(null, false, { message: "Usuario o contraseña incorrecta" });
           } 
+          user.last_connection = new Date();
+          user.save();
           req.success = true;
           req.message = "Logueado con exito"
           return done(null, user, { message: "Logueado con exito" });

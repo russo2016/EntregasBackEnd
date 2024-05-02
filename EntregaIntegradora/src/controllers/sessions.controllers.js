@@ -91,12 +91,14 @@ export const logout = async (req, res) => {
                 logger.error(err);
                 res.status(500).json({ success: false, message: 'Error al cerrar sesión' });
             } else {
+                const user = req.session.user
+                logger.info(`Sesión cerrada correctamente para el usuario ${user.email}`);
                 logger.info('Sesión cerrada correctamente');
                 res.json({ success: true, message: 'Sesión cerrada correctamente' });
             }
         });
     } catch (error) {
-        logger.error(error);
+        console.error(error);
         res.status(500).json(error);
     }
 };

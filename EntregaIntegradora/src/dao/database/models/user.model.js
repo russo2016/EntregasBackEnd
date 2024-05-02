@@ -10,7 +10,12 @@ const userSchema = new mongoose.Schema({
     password: {type: String, required: true, max:100},
     age: {type: Number, required: true, max:100},
     role: {type: String, required: true, max:100},
-    cart: { type: mongoose.Schema.Types.ObjectId, ref: "carts" }
+    cart: { type: mongoose.Schema.Types.ObjectId, ref: "carts" },
+    documents:[{
+        name: {type: String},
+        reference: {type: String},
+    }],
+    last_connection: { type: Date }
 });
 
 

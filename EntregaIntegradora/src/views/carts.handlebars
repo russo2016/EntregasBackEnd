@@ -37,7 +37,7 @@
                             <p class="carrito-producto-precio">${{product.price}}</p>
                             <p class="carrito-producto-cantidad">Cantidad en el carrito: {{this.quantity}}</p>
                             <p id="productId">{{product._id}}</p>
-                            <button data-product-id="{{product._id}}" class="deleteProductFromCart"><i class="deleteIcon bi bi-trash-fill"></i></button>
+                            <button class="deleteProductFromCart"><i data-product-id="{{product._id}}" class="deleteIcon bi bi-trash-fill"></i></button>
                         </div>
                 {{/each}}
                 </div>
