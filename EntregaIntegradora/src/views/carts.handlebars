@@ -36,10 +36,11 @@
                             <h3 class="titulo-producto-carrito">{{product.title}}</h3>
                             <p class="carrito-producto-precio">${{product.price}}</p>
                             <p class="carrito-producto-cantidad">Cantidad en el carrito: {{this.quantity}}</p>
+                            <p id="productId">{{product._id}}</p>
+                            <button id="delete-product-from-cart" class="deleteProductFromCart"><i class="deleteIcon bi bi-trash-fill"></i></button>
                         </div>
                 {{/each}}
                 </div>
-
                 <div id="carrito-acciones" class="carrito-acciones">
                     <div class="carrito-acciones-izquierda">
                         <button id="btn-delete-cart" class="carrito-acciones-vaciar">Vaciar carrito</button>

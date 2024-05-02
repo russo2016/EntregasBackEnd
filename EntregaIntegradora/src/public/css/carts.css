@@ -189,3 +189,19 @@ main {
 .close-menu {
     display: none;
 }
+
+.deleteProductFromCart{
+    background-color: transparent;
+    border: 0;
+    color: red;
+    cursor: pointer;
+}
+
+.deleteIcon{
+    width: 40px;
+    height: 40px;
+}
+
+#productId{
+    display: none;
+}
