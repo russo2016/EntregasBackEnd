@@ -12,7 +12,10 @@ purchaseBtn.addEventListener('click', async (e) => {
         const userData = await response.json();
         if (userData.user) {
             const cart = userData.user.cart;
-            window.location.href = `/carts/${cart}/purchase`;
+            setTimeout(shoot, 0);
+            setTimeout(() => {
+            window.location.href = `/carts/${cart}/purchase`
+            },2000)
         } else {
             console.error('No se recibió información de usuario válida');
         }
@@ -73,3 +76,30 @@ deleteProductBtns.forEach(btn => {
         }
     });
 });
+
+const defaults = {
+    spread: 360,
+    ticks: 50,
+    gravity: 0,
+    decay: 0.94,
+    startVelocity: 30,
+    shapes: ["star"],
+    colors: ["FFE400", "FFBD00", "E89400", "FFCA6C", "FDFFB8"],
+  };
+  
+  function shoot() {
+    confetti({
+      ...defaults,
+      particleCount: 40,
+      scalar: 1.2,
+      shapes: ["star"],
+    });
+  
+    confetti({
+      ...defaults,
+      particleCount: 10,
+      scalar: 0.75,
+      shapes: ["circle"],
+    });
+  }
+  

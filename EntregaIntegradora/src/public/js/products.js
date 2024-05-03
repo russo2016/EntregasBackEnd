@@ -44,7 +44,15 @@ addProductButtons.forEach((button) => {
                     .then(response => response.json())
                     .then(data => {
                         if (data.message === "success") {
-                            window.location.reload();
+                            Swal.fire({
+                                icon: "success",
+                                title: "Producto agregado correctamente",
+                                showConfirmButton: false,
+                                timer: 1000,
+                              });
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
                         } else {
                             console.error(data.message);
                         }
