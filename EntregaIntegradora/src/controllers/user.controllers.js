@@ -44,7 +44,7 @@ export const changeRole = async (req, res) => {
             return res.status(200).json({ success: true, message: "Rol cambiado a usuario estándar con éxito" });
         }
 
-        const requiredDocuments = ['Identificacion', 'Comprobante de domicilio', 'Comprobante de estado de cuenta'];
+        const requiredDocuments = ['identification', 'address', 'status'];
         const hasAllDocuments = requiredDocuments.every(doc => user.documents.some(d => d.name === doc));
 
         if (hasAllDocuments) {
@@ -56,7 +56,7 @@ export const changeRole = async (req, res) => {
                 return res.status(200).json({ message: "El usuario ya es premium", success: false });
             }
         } else {
-            return res.status(400).json({ message: "Faltan documentos requeridos para actualizar a premium", success: false });
+            return res.status(400).json({ message: "El usuario no tiene todos los documentos requeridos", success: false });
         }
     } catch (error) {
         console.log(error);

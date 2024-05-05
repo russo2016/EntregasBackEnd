@@ -5,14 +5,14 @@ const storage = multer.diskStorage({
         const {name} = req.body;
         let destinationFolder;
         switch (name) {
-            case "Identification":
+            case "identification":
                 destinationFolder = 'src/public/uploads/identifications';
                 break;
-            case "Comprobante de domicilio":
-                destinationFolder = 'src/public/uploads/addressProofs';
+            case "address":
+                destinationFolder = 'src/public/uploads/address';
                 break;
-            case "Comprobante de estado de cuenta":
-                destinationFolder = 'src/public/uploads/bankStatements';
+            case "status":
+                destinationFolder = 'src/public/uploads/status';
                 break;
             default:
                 cb(new Error("Documento no válido"));
@@ -24,13 +24,13 @@ const storage = multer.diskStorage({
         const { name } = req.body;
         let newFilename;
         switch (name) {
-            case "Identification":
+            case "identification":
                 newFilename = `${uid}-${name}-${file.originalname}`;
                 break;
-            case "Comprobante de domicilio":
+            case "address":
                 newFilename = `${uid}-${name}-${file.originalname}`;
                 break;
-            case "Comprobante de estado de cuenta":
+            case "status":
                 newFilename = `${uid}-${name}-${file.originalname}`;
                 break;
             default:
