@@ -73,7 +73,7 @@ export const uploadDocuments = async (req, res) => {
             logger.error("Usuario no encontrado");
             return res.status(404).json({ message: "Usuario no encontrado", success: false });
         }
-        const documentReference = req.file.originalname;
+        const documentReference = req.file.filename;
         const name = req.body.name;
 
         if (user.documents.some(d => d.name === name)) {
