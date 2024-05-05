@@ -44,4 +44,9 @@ export default class UsersService {
         const response = await this.dao.delete(id);
         return response;
     }
+
+    async addDocument(id, document){
+        const response = await this.dao.addDocument(id, document);
+        return response;
+    }
 }

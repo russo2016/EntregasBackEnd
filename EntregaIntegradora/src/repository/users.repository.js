@@ -87,4 +87,14 @@ export default class UsersService {
             throw error;
         }
     }
+
+    async updateDocuments(id, document){
+        try {
+            const response = await this.dao.addDocument(id, document);
+            return response;
+        } catch (error) {
+            logger.error(`Error al subir el documento del usuario con el ID ${id}:`, error);
+            throw error;
+        }
+    }
 }

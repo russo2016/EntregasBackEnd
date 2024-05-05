@@ -36,4 +36,8 @@ export default class Users {
   delete = async (id) => {
     return await userModel.findByIdAndDelete(id);
   };
+
+  addDocument = async (id, document) => {
+    return await userModel.findByIdAndUpdate(id, { $push: { documents: document } }, { new: true });
+  };
 }

@@ -7,5 +7,6 @@ const router = Router();
 router.get("/",auth(["PUBLIC"]), controller.getAllUsers)
 router.get("/:id",auth(["PUBLIC"]), controller.getUserById)
 router.post("/premium/:id",auth(["PUBLIC"]), controller.changeRole)
+router.post("/:uid/documents",auth(["PUBLIC"]), controller.uploadDocuments)
 
 export default router;
