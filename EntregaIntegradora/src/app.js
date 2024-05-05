@@ -20,9 +20,21 @@ import getLogger from './utils/logger.js';
 import usersRouter from './routes/user.route.js';
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
+import multer from 'multer';
 
 dotenv.config();
 
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'src/public/images')
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.originalname)
+    }
+});
+
+const uploader = multer({ storage: storage });
 const app = express();
 const PORT = process.env.PORT || 8080;
 const DB_URL = process.env.DB_URL || "mongodb://localhost:27017/ecommerce";
@@ -64,6 +76,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(CODERSECRET));
 app.use(express.static(__dirname + "/public"));
+
+app.use(uploader.single("file"), (req, res)=>{
+    console.log(req.file);
+    res.send("Archivo subido con éxito");
+
+})
 
 app.engine("handlebars",handlebars.engine());
 app.set("views",__dirname + "/views");

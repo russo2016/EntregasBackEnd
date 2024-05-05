@@ -74,17 +74,17 @@ export const uploadDocuments = async (req, res) => {
             return res.status(404).json({ message: "Usuario no encontrado", success: false });
         }
         const document = req.body;
-        console.log(req.body)
-        // if (!document.name || !document.reference) {
-        //     return res.status(400).json({ message: "Faltan datos requeridos", success: false });
-        // }
+        console.log(document)
+        if (!document.name || !document.reference) {
+            return res.status(400).json({ message: "Faltan datos requeridos", success: false });
+        }
 
-        // const existingDocument = user.documents.find(doc => doc.name === document.name && doc.reference === document.reference);
-        // if (existingDocument) {
-        //     return res.status(400).json({ message: "El documento ya existe", success: false });
-        // }
+        const existingDocument = user.documents.find(doc => doc.name === document.name && doc.reference === document.reference);
+        if (existingDocument) {
+            return res.status(400).json({ message: "El documento ya existe", success: false });
+        }
 
-        //const response = await userService.updateDocuments(user._id, document);
+        const response = await userService.updateDocuments(user._id, document);
         res.status(200).json({ success: true, message: "Documento subido con éxito" });
     } catch (error) {
         console.log(error);
