@@ -80,7 +80,7 @@ export const uploadDocuments = async (req, res) => {
             return res.status(400).json({ message: "El usuario ya ha subido este documento", success: false });
         }
 
-        const document = { name, reference: documentReference };
+        const document = { name : name, reference: documentReference };
 
         const response = await userService.updateDocuments(user._id, document);
         return res.status(200).json({ response:response ,success: true, message: "Documento subido con éxito" });

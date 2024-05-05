@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
     documents:[{
         name: {type: String},
         reference: {type: String},
+        _id: false
     }],
     last_connection: { type: Date }
 });
