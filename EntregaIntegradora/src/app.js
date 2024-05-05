@@ -77,10 +77,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(CODERSECRET));
 app.use(express.static(__dirname + "/public"));
 
-app.use(uploader.single("file"), (req, res)=>{
+app.use(uploader.single("file"), (req, res, next)=>{
     console.log(req.file);
     res.send("Archivo subido con éxito");
-
+    next();
 })
 
 app.engine("handlebars",handlebars.engine());

@@ -44,7 +44,7 @@ export const changeRole = async (req, res) => {
             return res.status(200).json({ success: true, message: "Rol cambiado a usuario estándar con éxito" });
         }
 
-        const requiredDocuments = ['Identificación', 'Comprobante de domicilio', 'Comprobante de estado de cuenta'];
+        const requiredDocuments = ['Identificacion', 'Comprobante de domicilio', 'Comprobante de estado de cuenta'];
         const hasAllDocuments = requiredDocuments.every(doc => user.documents.some(d => d.name === doc));
 
         if (hasAllDocuments) {
@@ -73,21 +73,20 @@ export const uploadDocuments = async (req, res) => {
             logger.error("Usuario no encontrado");
             return res.status(404).json({ message: "Usuario no encontrado", success: false });
         }
-        const document = req.body;
-        console.log(document)
-        if (!document.name || !document.reference) {
-            return res.status(400).json({ message: "Faltan datos requeridos", success: false });
+        const documentReference = req.file.originalname;
+        const name = req.body.name;
+
+        if (user.documents.some(d => d.name === name)) {
+            return res.status(400).json({ message: "El usuario ya ha subido este documento", success: false });
         }
 
-        const existingDocument = user.documents.find(doc => doc.name === document.name && doc.reference === document.reference);
-        if (existingDocument) {
-            return res.status(400).json({ message: "El documento ya existe", success: false });
-        }
+        const document = { name, reference: documentReference };
 
         const response = await userService.updateDocuments(user._id, document);
-        res.status(200).json({ success: true, message: "Documento subido con éxito" });
+        return res.status(200).json({ response:response ,success: true, message: "Documento subido con éxito" });
     } catch (error) {
+        logger.error(error);
         console.log(error);
-        res.status(500).json(error);
+        return res.status(500).json(error);
     }
 }
