@@ -127,3 +127,38 @@ export const getUserRole = async (req, res) => {
         console.log(error);
     }
 }
+
+export const deleteUserById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await userService.getUserById(id);
+        if (!user) {
+            logger.error("Usuario no encontrado");
+            return res.status(404).json({ message: "Usuario no encontrado", success: false });
+        }
+        const deletedUser = await userService.deleteUser(user._id);
+        res.status(200).json({response: deletedUser, success: true, message: "Usuario eliminado con éxito" });
+    } catch (error) {
+        logger.error(error);
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
+
+export const setRole = async (req, res) => {
+    try {
+        const { id, role } = req.params;
+        const user = await userService.getUserById(id);
+        if (!user) {
+            logger.error("Usuario no encontrado");
+            return res.status(404).json({ message: "Usuario no encontrado", success: false });
+        }
+        user.role = role;
+        await user.save();
+        res.status(200).json({ success: true, message: `Rol cambiado a ${user.role} con éxito` });
+    } catch (error) {
+        logger.error(error);
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}

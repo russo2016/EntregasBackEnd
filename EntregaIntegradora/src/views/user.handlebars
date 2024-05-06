@@ -1,20 +1,22 @@
 <div>
-    <form>
-        <input type="email">
-        <label for="email">email:</label>
-        <select>
+    <form id="setRoleForm">
+        <label for="id">id:</label>
+        <input id="userId" type="text">
+        <label>Rol:</label>
+        <select id="role">
             <option value="admin">admin</option>
             <option value="user">user</option>
             <option value="premium">premium</option>
         </select>
-        <label>Rol:</label>
+            <button>Asignar rol</button>
+
     </form>
-    <button>Asignar rol</button>
 </div>
 <div>
-    <form>
-        <input type="text">
+    <form id="deleteUserForm">
+        <input type="text" id="deleteUserId">
         <label for="id">id del usuario a eliminar</label>
+        <button type="submit">Eliminar usuario</button>
     </form>
-    <button>Eliminar usuario</button>
 </div>
+<script src="/js/user.js"></script>
