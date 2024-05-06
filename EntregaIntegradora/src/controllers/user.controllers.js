@@ -1,9 +1,22 @@
 import {userService} from "../repository/index.js";
 import getLogger from "../utils/logger.js";
+import UsersDTO from "../dao/DTO/usersDTO.js";
 
 const logger = getLogger();
 
 export const getAllUsers = async (req, res) => {
+    try {
+        const users = await userService.getUsers();
+        const usersDTO = users.map(user => new UsersDTO(user));
+        res.status(200).json(usersDTO);
+    } catch (error) {
+        console.log(error);
+        logger.error(error);
+        res.status(500).json(error);
+    }
+}
+
+export const getUsers = async (req, res) => {
     try {
         const users = await userService.getUsers();
         res.status(200).json(users);
@@ -88,5 +101,29 @@ export const uploadDocuments = async (req, res) => {
         logger.error(error);
         console.log(error);
         return res.status(500).json(error);
+    }
+}
+
+export const deleteUsersNotUsedInLast2Hours = async (req, res) => {
+    try {
+        const users = await userService.getUsers();
+        const usersToDelete = users.filter(user => user.last_connection < new Date(Date.now() -  2*(60 * 60 * 1000)));
+        const deletedUsers = await Promise.all(usersToDelete.map(user => userService.deleteUser(user._id)));
+        if (deletedUsers.length === 0) {
+            return res.status(200).json({ success: true, message: "No hay usuarios para eliminar" });
+        }
+        res.status(200).json({ usersDeleted: deletedUsers.length, success: true, message: "Usuarios eliminados con éxito" });
+    } catch (error) {
+        logger.error(error);
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
+
+export const getUserRole = async (req, res) => {
+    try{
+        res.render("user")
+    } catch (error) {
+        console.log(error);
     }
 }

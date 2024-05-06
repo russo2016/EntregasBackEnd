@@ -4,9 +4,18 @@ import EErrors from "../errorTools/enum.js";
 import { generateProductErrorInfo } from "../errorTools/info.js";
 import getLogger from "../utils/logger.js";
 import { Products } from "../dao/factory.js";
+import nodemailer from "nodemailer";
 
 const logger = getLogger();
 const productService = ProductService;
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.APP_PASSWORD,
+    },
+});
 
 export const getAllProducts = async (req, res) => {
     try {
@@ -103,9 +112,16 @@ export const deleteProduct = async (req, res) => {
         
         if(req.session.user.role == "premium"){
             if(req.session.user.email == product.owner){
-                const response = await productService.deleteProduct(id);
+                let result = await transporter.sendMail({
+                    from: `${process.env.EMAIL}`,
+                    to: `${product.owner}`,
+                    subject: "Producto eliminado",
+                    text: "Este mail es para notificar que su producto ha sido eliminado",
+                    html: `<p>El producto ${product.title} fue eliminado</p>`
+                });
                 logger.debug("Producto eliminado por su creador")
-                res.status(200).json(response);
+                const response = await productService.deleteProduct(id);
+                res.status(200).json({response,result});
             }
             else{
                 console.log(req.session.user.role)

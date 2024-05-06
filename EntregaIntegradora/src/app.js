@@ -92,6 +92,7 @@ app.use("/api/messages",messagesRouter);
 app.use("/api/carts",cartsRouter);
 app.use("/carts",cartsRouter);
 app.use("/",mockingRouter)
+app.use("/users",usersRouter)
 app.use("/api/users",usersRouter)
 app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
@@ -104,13 +105,3 @@ app.get('/loggerTest', (req, res) => {
     logger.fatal('Fatal message');
     res.send('Logging test completed');
 });
-
-// app.get("*", (req, res) => {
-//     logger.error("Ruta no encontrada");
-//     CustomError.createError({
-//         name: "Que estas buscando?",
-//         cause: generateNotFoundRouteErrorInfo(),
-//         message: "La ruta no existe",
-//         code: EErrors.ROUTING_ERROR
-//     });
-// });
