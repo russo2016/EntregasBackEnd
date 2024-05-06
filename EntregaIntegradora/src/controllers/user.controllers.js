@@ -1,6 +1,6 @@
 import {userService} from "../repository/index.js";
 import getLogger from "../utils/logger.js";
-import UsersDTO from "../dao/DTO/usersDTO.js";
+import UsersToShowDTO from "../dao/DTO/usersToShowDTO.js";
 import nodemailer from "nodemailer";
 
 const logger = getLogger();
@@ -16,8 +16,8 @@ const transporter = nodemailer.createTransport({
 export const getAllUsers = async (req, res) => {
     try {
         const users = await userService.getUsers();
-        const usersDTO = users.map(user => new UsersDTO(user));
-        res.status(200).json(usersDTO);
+        const usersToShowDTO = users.map(user => new UsersToShowDTO(user));
+        res.status(200).json(usersToShowDTO);
     } catch (error) {
         console.log(error);
         logger.error(error);
