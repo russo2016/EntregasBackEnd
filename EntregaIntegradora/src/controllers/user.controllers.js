@@ -1,8 +1,17 @@
 import {userService} from "../repository/index.js";
 import getLogger from "../utils/logger.js";
 import UsersDTO from "../dao/DTO/usersDTO.js";
+import nodemailer from "nodemailer";
 
 const logger = getLogger();
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.APP_PASSWORD,
+    },
+});
 
 export const getAllUsers = async (req, res) => {
     try {
@@ -108,7 +117,10 @@ export const deleteUsersNotUsedInLast2Hours = async (req, res) => {
     try {
         const users = await userService.getUsers();
         const usersToDelete = users.filter(user => user.last_connection < new Date(Date.now() -  2*(60 * 60 * 1000)));
-        const deletedUsers = await Promise.all(usersToDelete.map(user => userService.deleteUser(user._id)));
+        const deletedUsers = await Promise.all(usersToDelete.map(async (user) => {
+            await sendDeleteUserEmail(user.email);
+            return userService.deleteUser(user._id);
+        }));
         if (deletedUsers.length === 0) {
             return res.status(200).json({ success: true, message: "No hay usuarios para eliminar" });
         }
@@ -161,4 +173,15 @@ export const setRole = async (req, res) => {
         console.log(error);
         return res.status(500).json(error);
     }
+}
+
+async function sendDeleteUserEmail(email){
+    let result = await transporter.sendMail({
+        from: `${process.env.EMAIL}`,
+        to: `${email}`,
+        subject: "Usuario eliminado",
+        text: "Este mail es para notificar que su usuario ha sido eliminado",
+        html: "<p>El usuario fue eliminado</p>"
+    });
+    return result;
 }
