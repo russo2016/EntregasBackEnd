@@ -115,6 +115,7 @@ export const getCurrentSession = async (req, res) => {
             fullName: userDTO.fullName,
             email: userDTO.email,
             role: userDTO.role,
+            cart : userDTO.cart
         };
 
         const session = {
