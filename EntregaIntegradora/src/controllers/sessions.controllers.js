@@ -148,7 +148,7 @@ export const getForgotPasswordPage = async (req, res) => {
     try {
         res.render("forgotPass", {
             title: "Restaurar contraseña",
-            style: "css/forgotPassword.css"
+            style: "/css/forgotPassword.css"
         });
     } catch (error) {
         logger.error(error);
@@ -160,7 +160,7 @@ export const getNewPasswordPage = async (req, res) => {
     try {
         res.render("newPassword", {
             title: "Nueva contraseña",
-            style: "css/newPassword.css"
+            style: "/css/newPassword.css"
         });
     } catch (error) {
         logger.error(error);

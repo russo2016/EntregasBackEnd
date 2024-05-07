@@ -5,6 +5,7 @@ import { generateProductErrorInfo } from "../errorTools/info.js";
 import getLogger from "../utils/logger.js";
 import { Products } from "../dao/factory.js";
 import nodemailer from "nodemailer";
+import {userService} from "../repository/index.js";
 
 const logger = getLogger();
 const productService = ProductService;
@@ -75,7 +76,7 @@ export const createProduct = async (req, res) => {
         }
         const response = await productService.saveProduct({ title, description, price, thumbnail, code, stock,owner});
         logger.debug("Producto creado con éxito")
-        res.status(200).json(response);
+        res.status(200).json({response,success : true});
     } catch (error) {
         logger.error(error);
         res.status(500).json(CustomError.createError({
@@ -93,7 +94,7 @@ export const updateProduct = async (req, res) => {
     try {
         const response = await productService.updateProduct(id, { title, description, price, thumbnail, code, stock });
         logger.debug("Producto editado con éxito")
-        res.status(200).json(response);
+        res.status(200).json({response,success : true});
     } catch (error) {
         logger.error(error);
         res.status(500).json(CustomError.createError({
@@ -108,39 +109,39 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
     const { id } = req.params;
     try {
+        let result
         const product = await productService.getById(id);
-        
-        if(req.session.user.role == "premium"){
-            if(req.session.user.email == product.owner){
-                let result = await transporter.sendMail({
+        if(product.owner != "admin"){
+            const productOwner = await userService.getUser(product.owner);
+            if(productOwner.role == "premium"){
+                result = await transporter.sendMail({
                     from: `${process.env.EMAIL}`,
                     to: `${product.owner}`,
                     subject: "Producto eliminado",
                     text: "Este mail es para notificar que su producto ha sido eliminado",
                     html: `<p>El producto ${product.title} fue eliminado</p>`
                 });
-                logger.debug("Producto eliminado por su creador")
                 const response = await productService.deleteProduct(id);
-                res.status(200).json({response,result});
-            }
-            else{
-                console.log(req.session.user.role)
-                logger.error("No tienes permisos para eliminar este producto");
-                res.status(401).json("No tienes permisos para eliminar este producto");
+                logger.debug("Producto eliminado con éxito")
+                res.status(200).json({response:response, success : true});
+            }else{
+                const response = await productService.deleteProduct(id);
+                logger.debug("Producto eliminado con éxito")
+                res.status(200).json({response:response, success : true});
             }
         }else{
             const response = await productService.deleteProduct(id);
             logger.debug("Producto eliminado con éxito")
-            res.status(200).json(response);
+            res.status(200).json({response:response, success : true});
         }
     } catch (error) {
         console.log(error)
-        logger.error(error);
-        res.status(500).json(CustomError.createError({
-            name: "Error eliminando el producto",
-            cause: generateProductErrorInfo(req.body),
-            message: "Error eliminando el producto",
-            code: EErrors.INVALID_TYPES_ERROR
-        }));
+        // logger.error(error);
+        // res.status(500).json(CustomError.createError({
+        //     name: "Error eliminando el producto",
+        //     cause: generateProductErrorInfo(req.body),
+        //     message: "Error eliminando el producto",
+        //     code: EErrors.INVALID_TYPES_ERROR
+        // }));
     }
 };

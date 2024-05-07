@@ -100,5 +100,6 @@ export const getCartById = async (req, res) => {
 export const realtime = async (req, res) => {
     res.render("realtimeProducts", {
         title: "Chat en tiempo real",
+        style: "/css/realtime.css"
     });
 };

@@ -1,57 +1,57 @@
-<div>
-    <h1>Add Product</h1>
-    <form>
-        <label for="title">Title:</label><br>
-        <input type="text" id="title" name="title" required><br>
+<div class="product-container">
+    <form class="product-form">
+        <h1 class="form-title" >Add Product</h1>
+        <label class="form-label" for="title">Title:</label><br>
+        <input class="form-input" type="text" id="title" name="title" required><br>
         
-        <label for="description">Description:</label><br>
-        <textarea id="description" name="description" required></textarea><br>
+        <label class="form-label" for="description">Description:</label><br>
+        <textarea class="form-input" id="description" name="description" required></textarea><br>
         
-        <label for="price">Price:</label><br>
-        <input type="number" id="price" name="price" min="0" step="0.01" required><br>
+        <label class="form-label" for="price">Price:</label><br>
+        <input class="form-input" type="number" id="price" name="price" min="0" step="0.01" required><br>
         
-        <label for="thumbnail">Thumbnail URL:</label><br>
-        <input type="text" id="thumbnail" name="thumbnail"><br>
+        <label class="form-label" for="thumbnail">Thumbnail URL:</label><br>
+        <input class="form-input" type="text" id="thumbnail" name="thumbnail"><br>
         
-        <label for="code">Product Code:</label><br>
-        <input type="text" id="code" name="code" required><br>
+        <label class="form-label" for="code">Product Code:</label><br>
+        <input class="form-input" type="text" id="code" name="code" required><br>
         
-        <label for="stock">Stock:</label><br>
-        <input type="number" id="stock" name="stock" min="0" required><br><br>
+        <label class="form-label" for="stock">Stock:</label><br>
+        <input class="form-input" type="number" id="stock" name="stock" min="0" required><br><br>
         
-        <button id="saveProduct" type="submit">Add Product</button>
+        <button class="form-button" id="saveProduct" type="submit">Add Product</button>
     </form>
-    <form id="delete" style="flex: 1; margin-left: 20px;">
-		<h3>Eliminar producto:</h3>
-		<label>Product ID:</label>
-		<input type="text" id="productId" />
+    <form class="product-form" id="delete" style="flex: 1; margin-left: 20px;">
+		<h3 class="form-title">Eliminar producto:</h3>
+		<label class="form-label">Product ID:</label>
+		<input class="form-input" type="text" id="productId" />
 
-		<button id="deleteProduct" type="button">Delete Product</button>
+		<button class="form-button" id="deleteProduct" type="button">Delete Product</button>
 	</form>
-        <form>
-            <h3>Actualizar producto</h3>
-        <label for="id">id:</label><br>
-        <input type="text" id="idPut" name="id" required><br>
+        <form class="product-form">
+        <h3 class="form-title">Actualizar producto</h3>
+        <label class="form-label" for="id">id:</label><br>
+        <input class="form-input" type="text" id="idPut" name="id" required><br>
 
-        <label for="title">Title:</label><br>
-        <input type="text" id="titlePut" name="title" required><br>
+        <label class="form-label" for="title">Title:</label><br>
+        <input class="form-input" type="text" id="titlePut" name="title" required><br>
         
-        <label for="description">Description:</label><br>
-        <textarea id="descriptionPut" name="description" required></textarea><br>
+        <label class="form-label" for="description">Description:</label><br>
+        <textarea class="form-input" id="descriptionPut" name="description" required></textarea><br>
         
-        <label for="price">Price:</label><br>
-        <input type="number" id="pricePut" name="price" min="0" step="0.01" required><br>
+        <label class="form-label" for="price">Price:</label><br>
+        <input class="form-input" type="number" id="pricePut" name="price" min="0" step="0.01" required><br>
         
-        <label for="thumbnail">Thumbnail URL:</label><br>
-        <input type="text" id="thumbnailPut" name="thumbnail"><br>
+        <label class="form-label" for="thumbnail">Thumbnail URL:</label><br>
+        <input class="form-input" type="text" id="thumbnailPut" name="thumbnail"><br>
         
-        <label for="code">Product Code:</label><br>
-        <input type="text" id="codePut" name="code" required><br>
+        <label class="form-label" for="code">Product Code:</label><br>
+        <input class="form-input" type="text" id="codePut" name="code" required><br>
         
-        <label for="stock">Stock:</label><br>
-        <input type="number" id="stockPut" name="stock" min="0" required><br><br>
+        <label class="form-label" for="stock">Stock:</label><br>
+        <input class="form-input" type="number" id="stockPut" name="stock" min="0" required><br><br>
         
-        <button id="updateProduct" type="submit">Update Product</button>
+        <button class="form-button" id="updateProduct" type="submit">Update Product</button>
     </form>
 </div> 
 <script src="/js/realtime.js"></script> 

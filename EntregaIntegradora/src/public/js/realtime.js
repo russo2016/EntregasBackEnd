@@ -95,7 +95,7 @@ updateProduct.addEventListener("click", (e) => {
         })
         .then((response) => response.json())
         .then((data) => {
-            if (data) {
+            if (data.success) {
                 alert("Producto actualizado");
             }
         })

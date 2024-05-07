@@ -134,7 +134,12 @@ export const deleteUsersNotUsedInLast2Hours = async (req, res) => {
 
 export const getUserRole = async (req, res) => {
     try{
-        res.render("user")
+        res.render("user",
+            {
+                title : "UserRole",
+                style: "/css/user.css"
+            }
+        )
     } catch (error) {
         console.log(error);
     }

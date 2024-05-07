@@ -26,7 +26,6 @@ setRoleForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     try{
         const id = document.getElementById('userId').value;
-        console.log(id)
         const role = document.getElementById('role').value;
         const response = await fetch(`/api/users/${id}/${role}`, {
             method: 'POST',
