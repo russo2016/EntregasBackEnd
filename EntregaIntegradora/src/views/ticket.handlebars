@@ -3,7 +3,7 @@
         <p class="ticket-info"><strong>Código:</strong> {{ ticket.code }}</p>
         <p class="ticket-info"><strong>Fecha de compra:</strong> {{ ticket.purchase_datetime }}</p>
         <p class="ticket-info"><strong>Comprador:</strong> {{ ticket.purchaser }}</p>
-        <p class="ticket-info"><strong>Total:</strong> {{ ticket.amount }}</p>
+        <p class="ticket-info"><strong>Total: </strong> ${{ ticket.amount }}</p>
         <h2 class="ticket-subtitle">Productos:</h2>
         <ul class="products-list">
             {{#each ticket.products}}
