@@ -136,7 +136,7 @@ export const forgotPassword = async (req, res, next) => {
             to: `${email}`,
             subject: "Forgot your password",
             text: "Este mail es para recuperar tu contraseña",
-            html: `<a href="http://localhost:8080/forgotPassword/${email}">Click aquí para recuperar tu contraseña</a>`
+            html: `<a href="https://entregasbackend-production.up.railway.app/forgotPassword/${email}">Click aquí para recuperar tu contraseña</a>`
           });
           res.json({ status: "success", result });
         } catch (error) {
