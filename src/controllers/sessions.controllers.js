@@ -78,6 +78,9 @@ export const login = async (req, res, next) => {
                 return res.status(500).json({ error: err.message, success: false });
             }
             req.session.user = req.user;
+            const user = req.user
+            user.last_connection = new Date();
+            user.save();
             logger.info("Inicio de sesión exitoso");
             return res.status(200).json({ message: "Inicio de sesión exitoso", success: true });
         });
